@@ -1,0 +1,118 @@
+@import "exports";
+section {
+  height: 100%;
+  color: white;
+}
+form {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  .mat-dialog-title {
+    line-height: unset;
+  }
+  header {
+    border-radius: $sectioning-container-border-radius;
+    padding: $sectioning-container-padding;
+
+    background-color: black;
+  }
+  h1 {
+    text-align: center;
+    @media screen and (max-width: $mobileL-screen) {
+      font-size: $h3-font-size;
+    }
+  }
+}
+
+.mat-dialog-content {
+  display: flex;
+  flex-grow: 2;
+  margin: $list-item-column-margin 0;
+
+  flex-direction: column;
+
+  .label-and-input {
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    border-radius: $sectioning-container-border-radius;
+    padding: $sectioning-container-padding;
+    font-size: $h3-font-size;
+    @media screen and (max-width: $mobileL-screen) {
+      font-size: $h4-font-size;
+    }
+    font-family: $serif-font-family;
+    * {
+      font-family: inherit;
+    }
+    input,
+    textarea {
+      height: $h1-font-size;
+      padding: inherit;
+      border-radius: inherit;
+      margin-top: $list-item-column-margin;
+
+      font-size: $h4-font-size;
+      font-family: inherit;
+      color: black;
+
+      @media screen and (max-width: $mobileL-screen) {
+        font-size: $h6-font-size;
+      }
+    }
+    .red-outline-input {
+      border: 5px red solid;
+    }
+    .green-outline-input {
+      border: 5px green solid;
+    }
+  }
+
+  #description-section {
+    flex-grow: 2;
+    margin-top: $list-item-column-margin;
+
+    textarea {
+      width: 100%;
+      max-width: 100%;
+      flex-grow: 2;
+      font-size: $h6-font-size;
+      font-family: $sans-serif-font-family;
+    }
+  }
+}
+.mat-dialog-actions {
+  #submit-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    button {
+      @include button-config($h3-font-size);
+      font-family: $serif-font-family;
+      @media screen and (max-width: $mobileL-screen) {
+        font-size: $h4-font-size;
+      }
+      @media screen and (max-width: $tablet-screen) {
+        margin-top: $list-item-column-margin;
+      }
+    }
+
+    .b-success {
+      background-color: rgb(75, 122, 75);
+      &:hover {
+        background-color: rgb(75, 255, 75);
+      }
+      &:disabled {
+        background-color: rgb(204, 44, 44);
+      }
+      margin-right: $list-item-row-margin;
+    }
+    .b-mistake {
+      background-color: rgb(255, 75, 75);
+      &:hover {
+        background-color: rgb(255, 0, 0);
+      }
+    }
+  }
+}

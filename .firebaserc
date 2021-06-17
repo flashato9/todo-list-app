@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "todo-list-ec324": {
+      "hosting": {
+        "todo-list": [
+          "todo-list-ec324"
+        ]
+      }
+    }
+  }
+}

@@ -1,1 +1,40 @@
+//
 /* You can add global styles to this file, and also import other style files */
+@import "exports";
+
+body {
+  display: flex;
+  justify-content: center;
+  background-color: rgb(37, 36, 36);
+}
+app-root {
+  width: 80vw;
+  @media screen and (max-width: $tablet-screen) {
+    width: 100%;
+  }
+}
+
+.dialog-box-create {
+  justify-content: center;
+  mat-dialog-container {
+    background-color: $background-color;
+    padding: 0.5rem;
+    width: 50%;
+    @media screen and (max-width: $laptopL-screen) {
+      width: 100%;
+      align-items: center;
+    }
+  }
+}
+.dialog-box-login {
+  justify-content: center;
+  mat-dialog-container {
+    background-color: $background-color;
+    padding: $sectioning-container-padding;
+    width: 50%;
+    @media screen and (max-width: $laptopL-screen) {
+      width: 100%;
+      align-items: center;
+    }
+  }
+}

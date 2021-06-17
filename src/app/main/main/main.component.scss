@@ -1,0 +1,16 @@
+@import "exports";
+main {
+  background-color: white;
+
+  padding: $sectioning-container-padding;
+  border-radius: $sectioning-container-border-radius;
+  margin-top: $list-item-column-margin;
+  min-height: $h1-font-size;
+}
+list-item {
+  display: block;
+  margin-top: $list-item-column-margin;
+  &:first-of-type {
+    margin-top: 0rem;
+  }
+}

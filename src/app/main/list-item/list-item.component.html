@@ -1,0 +1,27 @@
+<article>
+  <header (click)="this.descriptionShouldBeShowing = !this.descriptionShouldBeShowing">
+    <h1>{{ this.title }}</h1>
+    <ul>
+      <li>
+        <button
+          [class.active]="this.descriptionShouldBeShowing"
+          (click)="this.descriptionShouldBeShowing = !this.descriptionShouldBeShowing; $event.stopPropagation()"
+        >
+          <mat-icon>arrow_drop_down</mat-icon>
+        </button>
+      </li>
+      <li>
+        <button [class.active]="this.currentlyUpdatingItem" (click)="openUpdateWindow(); $event.stopPropagation()">
+          <mat-icon>update</mat-icon>
+        </button>
+      </li>
+      <li>
+        <button (click)="deleteLItem(); $event.stopPropagation()"><mat-icon>remove</mat-icon></button>
+      </li>
+    </ul>
+  </header>
+  <section *ngIf="this.descriptionShouldBeShowing">
+    <h2>Description</h2>
+    <p *ngFor="let paragraph of this.descriptionParagraphData">{{ paragraph }}</p>
+  </section>
+</article>

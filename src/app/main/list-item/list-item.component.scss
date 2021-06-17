@@ -1,0 +1,77 @@
+@import "exports";
+
+article {
+  background-color: $background-color;
+  padding: $sectioning-container-padding;
+  border-radius: $sectioning-container-border-radius;
+  color: white;
+}
+header {
+  display: flex;
+  cursor: pointer;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  @media screen and (max-width: $mobileL-screen) {
+    justify-content: center;
+  }
+  h1 {
+    font-size: $h4-font-size;
+    text-align: center;
+  }
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    li {
+      button {
+        @include icon-buttons($h2-font-size);
+        &:hover {
+          background-color: rgb(255, 76, 63);
+        }
+        mat-icon {
+          transition: transform 0.5s ease 0s;
+          &:hover {
+            transform: rotate(180deg);
+          }
+        }
+      }
+      &:last-of-type {
+        button {
+          mat-icon {
+            transition: none;
+            &:hover {
+              transform: none;
+            }
+          }
+        }
+      }
+      .active {
+        mat-icon {
+          transform: rotate(180deg);
+        }
+        background-color: rgb(255, 76, 63);
+      }
+      margin-right: $list-item-row-margin;
+      &:last-of-type {
+        margin-right: 0;
+      }
+    }
+    @media screen and (max-width: $mobileL-screen) {
+      margin-top: $list-item-column-margin;
+    }
+  }
+}
+section {
+  padding: $button-padding;
+  border-radius: $sectioning-container-border-radius;
+  margin-top: $list-item-column-margin;
+  background-color: white;
+  color: black;
+  p {
+    margin-top: $list-item-column-margin;
+    font-size: $h6-font-size;
+  }
+  h2 {
+    font-size: $h4-font-size;
+  }
+}

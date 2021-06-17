@@ -1,0 +1,67 @@
+<section>
+  <form [formGroup]="this.form" (ngSubmit)="onSubmit()">
+    <header mat-dialog-title>
+      <h1 *ngIf="this.thisIsACreateForm">CREATE Form</h1>
+      <h1 *ngIf="this.thisIsAnUpdateForm">UPDATE Form</h1>
+    </header>
+    <mat-dialog-content>
+      <div class="label-and-input">
+        <label for="title">Title:</label>
+        <input
+          formControlName="title"
+          [class.red-outline-input]="this.form.controls.title.dirty && !this.form.controls.title.valid"
+          [class.green-outline-input]="this.form.controls.title.dirty && this.form.controls.title.valid"
+          minlength="3"
+          type="text"
+          autofocus
+          name="var_title"
+          id="title"
+          placeholder="please enter a title..."
+          required
+          value=""
+        />
+      </div>
+      <div class="label-and-input" id="description-section">
+        <label for="description">Description:</label>
+        <textarea
+          formControlName="description"
+          [class.red-outline-input]="this.form.controls.description.dirty && !this.form.controls.description.valid"
+          [class.green-outline-input]="this.form.controls.description.dirty && this.form.controls.description.valid"
+          minlength="5"
+          name="var_description"
+          id="description"
+          cols="30"
+          rows="10"
+          placeholder="please enter a description of the todo..."
+          required
+          spellcheck="true"
+        ></textarea>
+      </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="center">
+      <div id="submit-section">
+        <button
+          class="b-success"
+          aria-label="create"
+          [disabled]="!this.form.valid"
+          type="submit"
+          [mat-dialog-close]="true"
+          *ngIf="this.thisIsACreateForm"
+        >
+          CREATE
+        </button>
+        <button
+          class="b-success"
+          aria-label="update"
+          [disabled]="!this.form.valid"
+          type="submit"
+          [mat-dialog-close]="true"
+          *ngIf="this.thisIsAnUpdateForm"
+        >
+          UPDATE
+        </button>
+        <button class="b-mistake" mat-dialog-close aria-label="cancel">Cancel</button>
+      </div>
+    </mat-dialog-actions>
+  </form>
+</section>

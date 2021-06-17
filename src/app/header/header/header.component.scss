@@ -1,0 +1,85 @@
+@import "exports";
+:host {
+  display: block;
+}
+
+header {
+  background-color: $background-color;
+  padding: $sectioning-container-padding;
+  border-radius: $sectioning-container-border-radius;
+  border: black 1px solid;
+
+  &.header-logged-in {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 50%);
+    justify-content: space-between;
+  }
+
+  align-items: center;
+  color: $title-text-color;
+  font-size: $h1-font-size;
+  * {
+    font-size: inherit;
+  }
+
+  .logo {
+    justify-self: flex-start;
+    text-align: center;
+    white-space: nowrap;
+  }
+  button {
+    @include icon-buttons(inherit);
+  }
+
+  .sign-in-button {
+    @include button-config-box-shadow-color(white);
+    position: absolute;
+    font-family: $serif-font-family;
+
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+
+    width: fit-content; /* Need a specific value to work */
+    top: 25%;
+    background-color: $background-color;
+
+    &:hover {
+      background-color: rgb(255, 31, 14);
+    }
+  }
+  .icon-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    button {
+      &:hover {
+        background-color: rgb(255, 31, 14);
+      }
+    }
+  }
+
+  @media screen and (max-width: $laptopL-screen) {
+    font-size: $h3-font-size;
+  }
+  @media screen and (max-width: $laptopL-screen) {
+    font-size: $h3-font-size;
+  }
+  @media screen and (max-width: $tablet-screen) {
+    &.header-logged-in {
+      grid-template-columns: repeat(1, 1fr);
+    }
+
+    .icon-buttons {
+      margin-top: $list-item-column-margin;
+      justify-content: center;
+    }
+    .sign-out-button {
+      margin-left: 20%;
+    }
+  }
+  @media screen and (max-width: $mobileS-screen) {
+    justify-content: space-evenly;
+  }
+}
