@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { UserAuthenticationService } from './services/user-authentication.service';
 
 @Component({
   selector: 'app-root',
@@ -8,12 +7,5 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  isLoggedIn: Observable<boolean>;
-  isLoggedOut: Observable<boolean>;
-
-  constructor() {
-    //debugging
-    this.isLoggedIn = of(true);
-    this.isLoggedOut = this.isLoggedIn.pipe(map((val) => !val));
-  }
+  constructor(public uA: UserAuthenticationService) {}
 }

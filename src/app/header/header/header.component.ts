@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { Observable, of } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
 import { LogInMenuComponent } from 'src/app/Authentication/log-in-menu/log-in-menu.component';
 import {
   CreateTodoDialogData,
@@ -18,9 +18,8 @@ export class HeaderComponent implements OnInit {
   isLoggedIn: Observable<boolean>;
   isLoggedOut: Observable<boolean>;
   constructor(public uA: UserAuthenticationService, public dialog: MatDialog) {
-    //Below is initialization for testing purposes.
-    this.isLoggedIn = of(true);
-    this.isLoggedOut = this.isLoggedIn.pipe(map((val) => !val));
+    this.isLoggedIn = uA.isLoggedIn$;
+    this.isLoggedOut = uA.isLoggedOut$;
   }
   //
   ngOnInit(): void {}
@@ -41,10 +40,7 @@ export class HeaderComponent implements OnInit {
     this.logTheDialog(dialogRef);
   }
   logOff() {
-    //fake implemenetaion
-    console.log('Logged off');
-    this.isLoggedIn = of(false);
-    this.isLoggedOut = this.isLoggedIn.pipe(map((val) => !val));
+    this.uA.logOffUser();
   }
   openLoginMenu() {
     const dialogRef = this.dialog.open(LogInMenuComponent, {

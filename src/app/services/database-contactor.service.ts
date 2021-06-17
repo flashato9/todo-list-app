@@ -3,34 +3,58 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { TodoListItem } from '../models/models';
+import { User } from './user-authentication.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DatabaseContactorService {
   private COLLECTION_PATH = '/todo-list-items';
+  private COLLECTION_PATH_USERS = '/todo-list-users';
   todo_list_items$: Observable<TodoListItem[]>;
 
   constructor(private firestore: AngularFirestore) {
     this.todo_list_items$ = this.readTodoListItems();
   }
-  private readTodoListItems(): Observable<TodoListItem[]> {
-    return this.firestore
-      .collection(this.COLLECTION_PATH)
-      .valueChanges()
-      .pipe(
-        map((value) => {
-          (<TodoListItem[]>value).sort((a, b) => {
-            if (a.id < b.id) return -1;
-            else return 1;
-          });
-          console.log('Items succefully Read');
-
-          return <TodoListItem[]>value;
-        })
-      );
+  upsertUserdocument(user: User) {
+    this.getDocumentId(this.COLLECTION_PATH_USERS, user.uid)
+      .then((value) => {
+        if (!value) {
+          this.firestore
+            .collection(this.COLLECTION_PATH_USERS)
+            .doc(this.firestore.createId())
+            .set({ id: user.uid })
+            .then(() => {
+              console.log('Document successfully created!');
+              return;
+            })
+            .catch((error) => {
+              console.error('CU2: Error creating document: ', error);
+              throw error;
+            });
+        }
+      })
+      .catch((reason) => {
+        console.error('CU1: Error finding Document Id, during createUserdocument(): ', reason);
+        return undefined;
+      });
   }
-  createTodoListItem(item: TodoListItem) {
+  collectionExists(path: string) {
+    this.firestore.collection('');
+  }
+  createTodoListItem(item: TodoListItem, user: User) {
+    this.getDocumentId(this.COLLECTION_PATH_USERS, user.uid)
+      .then((docId) => {
+        if (docId) {
+          docId as string;
+          this.firestore.collection(this.COLLECTION_PATH_USERS).doc(docId).collection('todo-list-items');
+        }
+      })
+      .catch((reason) => {
+        console.error('CUT1: Error finding Document Id, during createTodoListItem(): ', reason);
+        return undefined;
+      });
+
     this.firestore
       .collection(this.COLLECTION_PATH)
       .get()
@@ -93,13 +117,13 @@ export class DatabaseContactorService {
         return undefined;
       });
   }
-  private getDocumentId(collectionPath: string, itemId: number) {
+  private getDocumentId(collectionPath: string, itemId: number | string): Promise<string | undefined> {
     return this.firestore
       .collection(collectionPath)
       .ref.where('id', '==', itemId)
       .get()
       .then((value) => {
-        let documentId = '';
+        let documentId: string | undefined = undefined;
         value.forEach((element) => {
           documentId = element.id;
           return;
@@ -107,8 +131,24 @@ export class DatabaseContactorService {
         return documentId;
       })
       .catch((reason) => {
-        console.log('M1 Error Occured while fetching doucment Id', reason);
+        console.log('MISC1 Error Occured while fetching doucment Id', reason);
         throw reason;
       });
+  }
+  private readTodoListItems(): Observable<TodoListItem[]> {
+    return this.firestore
+      .collection(this.COLLECTION_PATH)
+      .valueChanges()
+      .pipe(
+        map((value) => {
+          (<TodoListItem[]>value).sort((a, b) => {
+            if (a.id < b.id) return -1;
+            else return 1;
+          });
+          console.log('Items succefully Read');
+
+          return <TodoListItem[]>value;
+        })
+      );
   }
 }

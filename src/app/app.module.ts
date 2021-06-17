@@ -34,7 +34,7 @@ import { MainComponent } from './main/main/main.component';
     ReactiveFormsModule,
     MatButtonModule,
     HttpClientModule,
-    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireModule.initializeApp(environment.firebase_config),
     AngularFirestoreModule,
   ],
   providers: [],
