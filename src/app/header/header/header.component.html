@@ -7,5 +7,5 @@
     <button (click)="logOff()" class="sign-out-button icon-button"><mat-icon>logout</mat-icon></button>
   </div>
 
-  <button (click)="openLoginMenu()" class="sign-in-button" *ngIf="this.isLoggedOut | async">Sign-In</button>
+  <button (click)="openAuthenticationMenu()" class="sign-in-button" *ngIf="this.isLoggedOut | async">Sign-In</button>
 </header>

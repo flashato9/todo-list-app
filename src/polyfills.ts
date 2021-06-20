@@ -57,9 +57,16 @@
 /***************************************************************************************************
  * Zone JS is required by default for Angular itself.
  */
-import 'zone.js';  // Included with Angular CLI.
 
-
+import 'core-js/es/object';
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */
+//AWS-Polyfills
+import 'core-js/es/typed-array';
+import 'zone.js'; // Included with Angular CLI.
+
+(window as any).global = window;
+(window as any).process = {
+  env: { DEBUG: undefined },
+};

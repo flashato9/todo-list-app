@@ -14,6 +14,6 @@ export class MainComponent implements OnInit, OnDestroy {
   ngOnInit(): void {}
 
   onDelete(item: TodoListItem) {
-    this.dC.deleteTodoListItem(item);
+    //this.dC.deleteTodoListItem(item);
   }
 }

@@ -16,4 +16,5 @@ export class AppComponent {
     this.isLoggedIn = of(true);
     this.isLoggedOut = this.isLoggedIn.pipe(map((val) => !val));
   }
+  ngOnInit() {}
 }

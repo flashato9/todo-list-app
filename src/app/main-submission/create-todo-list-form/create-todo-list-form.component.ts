@@ -69,9 +69,9 @@ export class CreateTodoListFormComponent implements OnInit, OnDestroy {
   }
   onSubmit() {
     if (this.thisIsACreateForm) {
-      this.dC.createTodoListItem(this.todoItem);
+      // this.dC.createTodoListItem(this.todoItem);
     } else {
-      this.dC.updateTodoListItem(this.todoItem);
+      //   this.dC.updateTodoListItem(this.todoItem);
     }
   }
 }

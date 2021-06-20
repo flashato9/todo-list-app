@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Observable, of } from 'rxjs';
 import { map, take } from 'rxjs/operators';
+import { AuthenticationComponent } from 'src/app/Authentication/authentication/authentication.component';
 import { LogInMenuComponent } from 'src/app/Authentication/log-in-menu/log-in-menu.component';
 import {
   CreateTodoDialogData,
@@ -46,8 +47,8 @@ export class HeaderComponent implements OnInit {
     this.isLoggedIn = of(false);
     this.isLoggedOut = this.isLoggedIn.pipe(map((val) => !val));
   }
-  openLoginMenu() {
-    const dialogRef = this.dialog.open(LogInMenuComponent, {
+  openAuthenticationMenu() {
+    const dialogRef = this.dialog.open(AuthenticationComponent, {
       width: '100%',
       height: '80vh',
       panelClass: 'dialog-box-login',
@@ -59,12 +60,12 @@ export class HeaderComponent implements OnInit {
     dR.afterOpened()
       .pipe(take(1))
       .subscribe(() => {
-        console.log(`Dialog LogInMenuComponent has opened...`);
+        console.log(`Dialog AuthenticationComponent has opened...`);
       });
     dR.afterClosed()
       .pipe(take(1))
       .subscribe(() => {
-        console.log(`Dialog LogInMenuComponent has closed...`);
+        console.log(`Dialog AuthenticationComponent has closed...`);
       });
   }
 }

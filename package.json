@@ -6,7 +6,9 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "amplify-modelgen": "node amplify/scripts/amplify-modelgen.js",
+    "amplify-push": "node amplify/scripts/amplify-push.js"
   },
   "private": true,
   "dependencies": {
@@ -21,8 +23,13 @@
     "@angular/platform-browser": "~12.0.2",
     "@angular/platform-browser-dynamic": "~12.0.2",
     "@angular/router": "~12.0.2",
-    "firebase": "^7.0 || ^8.0",
+    "@aws-amplify/ui-angular": "^1.0.12",
+    "aws-amplify": "^4.1.1",
+    "crypto-browserify": "^3.12.0",
+    "crypto-es": "^1.2.7",
+    "graphql": "^15.5.0",
     "rxjs": "~6.6.0",
+    "stream-browserify": "^3.0.0",
     "tslib": "^2.1.0",
     "zone.js": "~0.11.4"
   },
@@ -35,7 +42,8 @@
     "@types/node": "^12.11.1",
     "firebase-tools": "^8.0.0 || ^9.0.0",
     "fuzzy": "^0.1.3",
-    "inquirer": "^6.2.2",
+    "ini": "^1.3.5",
+    "inquirer": "^6.5.1",
     "inquirer-autocomplete-prompt": "^1.0.1",
     "jasmine-core": "~3.7.0",
     "jsonc-parser": "^3.0.0",

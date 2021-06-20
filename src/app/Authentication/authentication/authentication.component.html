@@ -1,0 +1,14 @@
+<log-in-menu
+  (onRequestStateChange)="setAuthenticationState($event)"
+  (onSuccessfulSubmit)="completeAuthentication($event)"
+  *ngIf="this.authenticationState === authState.Login"
+></log-in-menu>
+<sign-up-menu
+  (onRequestStateChange)="setAuthenticationState($event)"
+  (onSuccessfulSubmit)="completeAuthentication($event)"
+  *ngIf="this.authenticationState === authState.SignUp"
+></sign-up-menu>
+<recovery-menu
+  (onRequestStateChange)="setAuthenticationState($event)"
+  *ngIf="this.authenticationState === authState.Recovery"
+></recovery-menu>

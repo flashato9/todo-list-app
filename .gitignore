@@ -10,7 +10,7 @@
 # dependencies
 /node_modules
 #my server stuff  - Ato
-/src/back_end/server/node_modules 
+/src/back_end/server/node_modules
 
 # profiling files
 chrome-profiler-events*.json
@@ -45,3 +45,23 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+#amplify
+amplify/\#current-cloud-backend
+amplify/.config/local-*
+amplify/logs
+amplify/mock-data
+amplify/backend/amplify-meta.json
+amplify/backend/awscloudformation
+amplify/backend/.temp
+build/
+dist/
+node_modules/
+aws-exports.js
+awsconfiguration.json
+amplifyconfiguration.json
+amplifyconfiguration.dart
+amplify-build-config.json
+amplify-gradle-config.json
+amplifytools.xcconfig
+.secret-*

@@ -1,0 +1,29 @@
+<form [formGroup]="this.form" *ngIf="!this.isCodeVerificationStage" (ngSubmit)="createAccount()">
+  <header>
+    <h1>Create a new account</h1>
+  </header>
+
+  <div>
+    <label for="username">Username *</label>
+    <input formControlName="username" type="text" autofocus name="var_username" id="username" placeholder="Username" value="" />
+    <label for="password">Password *</label>
+    <input formControlName="password" id="password" name="var_password" placeholder="Password" value="" type="text" />
+    <label for="email">Email Address *</label>
+    <input formControlName="email" id="email" name="var_email" placeholder="Email" value="" type="text" />
+  </div>
+
+  <footer>
+    <p>Have an account? <a (click)="changeState(authState.Login)">Sign in</a></p>
+    <button aria-label="sign up" type="submit" [disabled]="!this.form.valid || !this.formIsDirty(this.form)">
+      Create Account
+    </button>
+  </footer>
+</form>
+
+<signup-confirmation-menu
+  (onSuccessfulSubmit)="this.onSuccessfulSubmit.emit($event)"
+  (onRequestStateChange)="this.changeState($event)"
+  *ngIf="this.isCodeVerificationStage"
+  [usernameForForm]="this.form.controls['username'].value"
+>
+</signup-confirmation-menu>
