@@ -1,0 +1,14 @@
+@import "exports";
+small {
+  font-size: $h6-font-size - 0.5rem;
+  color: rgb(255, 60, 60);
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: $sectioning-container-padding;
+  div {
+    display: flex;
+    flex-direction: column;
+  }
+}

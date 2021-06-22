@@ -37,7 +37,7 @@ $font-color: inherit;
     box-shadow: 1px 1px 15px $border-shadow-color;
   }
   &:disabled {
-    border: none;
+    border: transparent $button-border-style $button-border-width;
     box-shadow: none;
     cursor: default;
   }

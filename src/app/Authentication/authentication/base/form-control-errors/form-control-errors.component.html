@@ -1,0 +1,52 @@
+<div
+  class="container"
+  *ngIf="this.formControl && this.formControl.errors && (this.formControl.dirty || this.formControl.touched)"
+>
+  <div *ngIf="this.formControl.errors?.min">
+    <small>Input must be >= {{ this.formControl.errors.min.min }}.</small>
+  </div>
+  <div *ngIf="this.formControl.errors?.max">
+    <small>Input must be <= {{ this.formControl.errors.max.max }}.</small>
+  </div>
+  <div *ngIf="this.formControl.errors?.required"><small>Input is required.</small></div>
+  <div *ngIf="this.formControl.errors.email">
+    <small>Input must be a valid email address.</small>
+  </div>
+  <div *ngIf="this.formControl.errors?.minlength">
+    <small
+      >Input length must be >= {{ this.formControl.errors.minlength.requiredLength }}. Current length:{{
+        this.formControl.errors.minlength.actualLength
+      }}
+    </small>
+  </div>
+  <div *ngIf="this.formControl.errors?.maxlength">
+    <small
+      >Input length must be <= {{ this.formControl.errors.maxlength.requiredLength }}. Current length:{{
+        this.formControl.errors.maxlength.actualLength
+      }}</small
+    >
+  </div>
+  <div *ngIf="notNull(this.formControl.errors?.strongpassword)">
+    <small *ngIf="notNull(this.formControl.errors.strongpassword?.nospace)">
+      {{ this.formControl.errors.strongpassword.nospace }}
+    </small>
+    <small *ngIf="notNull(this.formControl.errors.strongpassword?.lowercase)"
+      >{{ this.formControl.errors.strongpassword.lowercase }}
+    </small>
+
+    <small *ngIf="notNull(this.formControl.errors.strongpassword?.uppercase)">
+      {{ this.formControl.errors.strongpassword.uppercase }}
+    </small>
+    <small *ngIf="notNull(this.formControl.errors.strongpassword?.number)"
+      >{{ this.formControl.errors.strongpassword.number }}
+    </small>
+    <small *ngIf="notNull(this.formControl.errors.strongpassword?.specialchar)">
+      {{ this.formControl.errors.strongpassword.specialchar }}
+    </small>
+  </div>
+  <div *ngIf="notNull(this.formControl.errors?.alphanume)">
+    <small>
+      {{ this.formControl.errors.alphanume }}
+    </small>
+  </div>
+</div>

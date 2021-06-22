@@ -2,14 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { SignUpParams } from '@aws-amplify/auth/lib-esm/types';
 import { Auth } from 'aws-amplify';
+import { UserInterfaceService } from 'src/app/services/user-interface.service';
+import { CustomValidators } from '../authentication/base/validator-functions/custom-validators';
 import { BaseAuthenticationComponent } from '../base-components/base-authentication/base-authentication.component';
 import {
   MAX_PASSWORD_LENGTH,
   MAX_USERNAME_LENGTH,
   MIN_PASSWORD_LENGTH,
   MIN_USERNAME_LENGTH,
-  STRONG_PASSWORD_REGEX,
-  USERNAME_REGEX,
 } from '../base-components/constants/form-constants';
 
 @Component({
@@ -19,25 +19,25 @@ import {
 })
 export class SignUpMenuComponent extends BaseAuthenticationComponent implements OnInit {
   isCodeVerificationStage: boolean = false;
-  constructor(public fb: FormBuilder) {
+  constructor(public fb: FormBuilder, public uI: UserInterfaceService) {
     super(
       fb.group({
         username: [
           '',
           [
             Validators.required,
-            Validators.min(MIN_USERNAME_LENGTH),
-            Validators.max(MAX_USERNAME_LENGTH),
-            Validators.pattern(USERNAME_REGEX),
+            Validators.minLength(MIN_USERNAME_LENGTH),
+            Validators.maxLength(MAX_USERNAME_LENGTH),
+            CustomValidators.validUsername,
           ],
         ],
         password: [
           '',
           [
             Validators.required,
-            Validators.min(MIN_PASSWORD_LENGTH),
-            Validators.max(MAX_PASSWORD_LENGTH),
-            Validators.pattern(STRONG_PASSWORD_REGEX),
+            Validators.minLength(MIN_PASSWORD_LENGTH),
+            Validators.maxLength(MAX_PASSWORD_LENGTH),
+            CustomValidators.strongPassword,
           ],
         ],
         email: ['', [Validators.required, Validators.email]],
@@ -51,6 +51,7 @@ export class SignUpMenuComponent extends BaseAuthenticationComponent implements 
   }
   async createAccount() {
     try {
+      this.uI.letItBeKnownUiIsLoading();
       const config: SignUpParams = {
         username: this.form.controls['username'].value,
         password: this.form.controls['password'].value,
@@ -58,11 +59,15 @@ export class SignUpMenuComponent extends BaseAuthenticationComponent implements 
           email: this.form.controls['email'].value,
         },
       };
-      const { user } = await Auth.signUp(config);
+      await Auth.signUp(config);
+      this.uI.letItBeKnownUiIsNotLoading();
       this.setCodeVerificationMode();
       console.log('✔️ Create account successful');
     } catch (error) {
+      this.uI.letItBeKnownUiIsNotLoading();
       console.log('❌ Error creating account: \n', error);
+
+      this.erorMessage = (<any>error).message + '.';
     }
   }
 }

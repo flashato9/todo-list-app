@@ -1,0 +1,121 @@
+@import "exports";
+form {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  header {
+    background-color: black;
+    padding: $sectioning-container-padding;
+    border-radius: $sectioning-container-border-radius;
+    font-size: $h1-font-size;
+
+    h1 {
+      text-align: center;
+      @media screen and (max-width: $laptopL-screen) {
+        font-size: $h2-font-size;
+      }
+      @media screen and (max-width: $laptop-screen) {
+        font-size: $h3-font-size;
+      }
+      @media screen and (max-width: $mobileL-screen) {
+        font-size: $h4-font-size;
+      }
+      @media screen and (max-width: $mobileM-screen) {
+        font-size: $h5-font-size;
+      }
+    }
+  }
+  .input-container {
+    flex-grow: 2;
+    display: flex;
+    flex-direction: column;
+    font-size: $h4-font-size;
+    @media screen and (max-width: $laptopL-screen) {
+      font-size: $h5-font-size;
+    }
+    @media screen and (max-width: $mobileM-screen) {
+      font-size: $h6-font-size;
+    }
+    margin-top: $list-item-column-margin;
+    margin-bottom: $list-item-column-margin;
+    .input {
+      display: flex;
+      flex-direction: column;
+      padding: $sectioning-container-padding;
+      margin-top: $list-item-column-margin;
+      background-color: black;
+      border-radius: $sectioning-container-border-radius;
+      input {
+        margin-top: $list-item-column-margin;
+        margin-bottom: $list-item-column-margin;
+        font-size: $h6-font-size;
+        border-radius: $sectioning-container-border-radius;
+        padding: $sectioning-container-padding;
+        color: black;
+      }
+    }
+    .error-message {
+      padding: $sectioning-container-padding;
+      font-size: $h6-font-size;
+      color: white;
+      a {
+        color: #1a0dab;
+        cursor: pointer;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+  // .error-message {
+  //   font-size: $h6-font-size;
+  //   p {
+  //     padding: $sectioning-container-padding;
+  //     font-size: inherit;
+  //   }
+  // }
+  footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 20%;
+    justify-content: space-evenly;
+    padding: $sectioning-container-padding;
+    p {
+      font-size: $h6-font-size;
+      margin-bottom: $list-item-column-margin;
+      align-self: flex-start;
+      a {
+        color: #1a0dab;
+        cursor: pointer;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+    button {
+      @include button-config($h3-font-size);
+      font-family: $serif-font-family;
+
+      @media screen and (max-width: $mobileL-screen) {
+        font-size: $h4-font-size;
+      }
+      @media screen and (max-width: $tablet-screen) {
+        margin-top: $list-item-column-margin;
+      }
+    }
+    .button-success {
+      background-color: rgb(75, 122, 75);
+      &:hover {
+        background-color: rgb(75, 255, 75);
+      }
+      &:disabled {
+        background-color: rgb(204, 44, 44);
+      }
+    }
+  }
+}

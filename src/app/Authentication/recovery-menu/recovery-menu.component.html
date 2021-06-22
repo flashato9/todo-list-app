@@ -2,24 +2,30 @@
   <header>
     <h1>Reset your password</h1>
   </header>
-  <div>
-    <label for="username">Username *</label>
-    <input
-      formControlName="username"
-      type="text"
-      autofocus
-      name="var_username"
-      id="username"
-      placeholder="Enter your username"
-      value=""
-    />
-    <div *ngIf="this.form.controls['username'].touched">
-      <p *ngIf="this.form.controls['username'].errors?.required">Required field.</p>
+  <div class="input-container">
+    <div class="input">
+      <label for="username">Username *</label>
+      <input
+        formControlName="username"
+        type="text"
+        name="var_username"
+        id="username"
+        placeholder="Enter your username"
+        value=""
+      />
+      <form-control-errors [control]="this.form.controls['username']"></form-control-errors>
     </div>
   </div>
   <footer>
     <p><a (click)="changeState(authState.Login)">Back to Sign In</a></p>
-    <button aria-label="send code" type="submit" [disabled]="!this.form.valid || !this.formIsDirty(this.form)">Send Code</button>
+    <button
+      class="button-success"
+      aria-label="send code"
+      type="submit"
+      [disabled]="!this.form.valid || !this.formIsDirty(this.form)"
+    >
+      Send Code
+    </button>
   </footer>
 </form>
 
@@ -27,48 +33,46 @@
   <header>
     <h1>Reset your password</h1>
   </header>
-  <div>
-    <label for="verification_code">Verification code</label>
-    <input
-      formControlName="verification_code"
-      type="number"
-      autofocus
-      placeholder="Enter code"
-      name="var_verification_code"
-      id="verification_code"
-    />
-    <div *ngIf="this.form.controls['verification_code'].touched">
-      <p *ngIf="this.form.controls['verification_code'].errors?.required">Required field.</p>
-      <p *ngIf="this.form.controls['verification_code'].errors?.pattern">Enter only numbers.</p>
+  <div class="input-container">
+    <div class="input">
+      <label for="verification_code">Verification code</label>
+      <input
+        formControlName="verification_code"
+        type="number"
+        placeholder="Enter code"
+        name="var_verification_code"
+        id="verification_code"
+      />
+      <form-control-errors [control]="this.form.controls['verification_code']"></form-control-errors>
     </div>
-
-    <label for="new_password">New password</label>
-    <input
-      formControlName="new_password"
-      id="new_password"
-      name="var_new_password"
-      placeholder="Enter your password"
-      value=""
-      type="text"
-    />
-    <div *ngIf="this.form.controls['new_password'].touched">
-      <p *ngIf="this.form.controls['new_password'].errors?.required">Required field.</p>
-      <p *ngIf="this.form.controls['new_password'].errors?.minlength">Minimum length 8 characters.</p>
-      <p *ngIf="this.form.controls['new_password'].errors?.maxlength">Maximum length 15 characters.</p>
-      <div *ngIf="this.form.controls['new_password'].errors?.pattern">
-        Password must include the following:
-        <ul>
-          <li>one or more lowercase letter(s)</li>
-          <li>one or more uppercase letter(s)</li>
-          <li>one or more digits(i.e., 0-9)</li>
-          <li>one or more non-alphanumeric characters (i.e., not a-z, A-Z or 0-9)</li>
-        </ul>
-      </div>
-      {{ this.form.controls["new_password"].errors | json }}
+    <div class="input">
+      <label for="new_password">New password</label>
+      <input
+        formControlName="new_password"
+        id="new_password"
+        name="var_new_password"
+        placeholder="Enter your password"
+        value=""
+        type="text"
+      />
+      <form-control-errors [control]="this.form.controls['new_password']"></form-control-errors>
     </div>
+    <div class="error-message" *ngIf="this.erorMessage">
+      <p>
+        {{ this.erorMessage }}
+      </p>
+    </div>
+    <p class="input-lost-pass">Lost your code? <a (click)="this.resendCode()">Resend Code</a></p>
   </div>
   <footer>
     <p><a (click)="changeState(authState.Login)">Back to Sign in</a></p>
-    <button aria-label="submit" type="submit" [disabled]="!this.form.valid || !this.formIsDirty(this.form)">Submit</button>
+    <button
+      class="button-success"
+      aria-label="submit"
+      type="submit"
+      [disabled]="!this.form.valid || !this.formIsDirty(this.form)"
+    >
+      Submit
+    </button>
   </footer>
 </form>

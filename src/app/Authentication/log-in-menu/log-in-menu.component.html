@@ -3,31 +3,53 @@
     <h1>Sign in to your account</h1>
   </header>
 
-  <div>
-    <label for="username">Username *</label>
-    <input
-      formControlName="username"
-      type="text"
-      autofocus
-      name="var_username"
-      id="username"
-      placeholder="Enter your username"
-      value=""
-    />
+  <div class="input-container">
+    <div class="input">
+      <label for="username">Username *</label>
+      <input
+        formControlName="username"
+        type="text"
+        name="var_username"
+        id="username"
+        placeholder="Enter your username"
+        value=""
+      />
+      <form-control-errors [control]="this.usernameControl"></form-control-errors>
+    </div>
 
-    <label for="password">Password *</label>
-    <input formControlName="password" id="password" name="var_password" placeholder="Enter your password" value="" type="text" />
-    <p>Forgot your password? <a (click)="changeState(authState.Recovery)">Reset password</a></p>
+    <div class="input">
+      <label for="password">Password *</label>
+      <input
+        formControlName="password"
+        id="password"
+        name="var_password"
+        placeholder="Enter your password"
+        value=""
+        type="password"
+      />
+      <form-control-errors [control]="this.passwordControl"></form-control-errors>
+    </div>
+    <div class="error-message" *ngIf="this.erorMessage">
+      <p>
+        {{ this.erorMessage }}
+        <a *ngIf="this.triggerOptionToEnterRecoveryMode" (click)="changeState(authState.Recovery)">
+          Click Here to reset your password</a
+        >
+      </p>
+    </div>
   </div>
-  <div id="errors" *ngIf="this.erorMessage">
-    <p>{{ this.erorMessage }}</p>
-    <p *ngIf="this.triggerOptionToEnterRecoveryMode">
-      <a (click)="changeState(authState.Recovery)">Click Here</a> to reset your password
-    </p>
-  </div>
+
   <footer>
-    <p>No Account? <a (click)="changeState(authState.SignUp)">Create Account</a></p>
-    <button aria-label="sign in" type="submit" [disabled]="!this.form.valid || !this.formIsDirty(this.form)">Sign In</button>
+    <p>Forgot your password? <a (click)="changeState(authState.Recovery)">Reset password.</a></p>
+    <p>No Account? <a (click)="changeState(authState.SignUp)">Create account.</a></p>
+    <button
+      class="button-success"
+      aria-label="sign in"
+      type="submit"
+      [disabled]="!this.form.valid || !this.formIsDirty(this.form)"
+    >
+      Sign In
+    </button>
   </footer>
 </form>
 <signup-confirmation-menu

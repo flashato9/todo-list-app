@@ -2,16 +2,33 @@
   <header>
     <h1>Confirm Sign up</h1>
   </header>
-  <div>
-    <label for="username">Username *</label>
-    <input formControlName="username" type="text" name="var_username" id="username" placeholder="Username" [disabled]="true" />
-    <label for="confirmation_code">Confirmation code</label>
-    <input formControlName="confirmation_code" type="number" autofocus name="var_confirmation_code" id="confirmation_code" />
-    <p>Lost your code? <a (click)="this.resendCode()">Resend Code</a></p>
+  <div class="input-container">
+    <div class="input">
+      <label for="username">Username *</label>
+      <input formControlName="username" type="text" name="var_username" id="username" placeholder="Username" />
+      <form-control-errors [control]="this.form.controls['username']"></form-control-errors>
+    </div>
+    <div class="input">
+      <label for="confirmation_code">Confirmation code</label>
+      <input formControlName="confirmation_code" type="number" name="var_confirmation_code" id="confirmation_code" />
+      <form-control-errors [control]="this.form.controls['confirmation_code']"></form-control-errors>
+    </div>
+    <div class="error-message" *ngIf="this.erorMessage">
+      <p>
+        {{ this.erorMessage }}
+      </p>
+    </div>
+    <p class="input-lost-pass">Lost your code? <a (click)="this.resendCode()">Resend Code</a></p>
   </div>
+
   <footer>
     <p><a (click)="changeState(authState.Login)">Back to Sign in</a></p>
-    <button aria-label="cornfirm" type="submit" [disabled]="!this.form.valid || !this.form.controls['confirmation_code'].dirty">
+    <button
+      class="button-success"
+      aria-label="cornfirm"
+      type="submit"
+      [disabled]="!this.form.valid || !this.form.controls['confirmation_code'].dirty"
+    >
       Confirm
     </button>
   </footer>

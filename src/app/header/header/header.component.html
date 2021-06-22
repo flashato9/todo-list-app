@@ -1,11 +1,13 @@
-<header [class.header-logged-in]="isLoggedIn | async">
+<header [class.header-logged-in]="this.uA.isLoggedIn$ | async">
   <h1 class="logo">Todo List</h1>
-  <div class="icon-buttons" *ngIf="this.isLoggedIn | async">
+  <div class="icon-buttons" *ngIf="this.uA.isLoggedIn$ | async">
     <button class="add-button icon-button" (click)="openCreationWindow()">
       <mat-icon>add</mat-icon>
     </button>
-    <button (click)="logOff()" class="sign-out-button icon-button"><mat-icon>logout</mat-icon></button>
+    <button (click)="logOff()" class="sign-out-button icon-button">
+      <mat-icon>logout</mat-icon>
+    </button>
   </div>
 
-  <button (click)="openAuthenticationMenu()" class="sign-in-button" *ngIf="this.isLoggedOut | async">Sign-In</button>
+  <button (click)="openAuthenticationMenu()" class="sign-in-button" *ngIf="this.uA.isLoggedOut$ | async">Sign-In</button>
 </header>

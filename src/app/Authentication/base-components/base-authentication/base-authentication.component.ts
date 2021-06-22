@@ -21,8 +21,10 @@ export class BaseAuthenticationComponent {
   }
 
   changeState(state: AuthState) {
+    this.reset();
     this.onRequestStateChange.emit(state);
   }
+  reset() {}
 
   formIsDirty(form: FormGroup) {
     return this.getControlsArray(form).every((control) => {

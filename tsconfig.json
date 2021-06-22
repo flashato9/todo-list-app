@@ -24,8 +24,8 @@
     "strictInputAccessModifiers": true,
     "strictTemplates": true,
     "paths": {
-      "crypto": ["/node_modules/crypto-browserify"],
-      "stream": ["/node_modules/stream-browserify"]
+      "crypto": ["./node_modules/crypto-browserify"],
+      "stream": ["./node_modules/stream-browserify"]
     }
   }
 }

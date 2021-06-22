@@ -3,18 +3,38 @@
     <h1>Create a new account</h1>
   </header>
 
-  <div>
-    <label for="username">Username *</label>
-    <input formControlName="username" type="text" autofocus name="var_username" id="username" placeholder="Username" value="" />
-    <label for="password">Password *</label>
-    <input formControlName="password" id="password" name="var_password" placeholder="Password" value="" type="text" />
-    <label for="email">Email Address *</label>
-    <input formControlName="email" id="email" name="var_email" placeholder="Email" value="" type="text" />
+  <div class="input-container">
+    <div class="input">
+      <label for="username">Username *</label>
+      <input formControlName="username" type="text" name="var_username" id="username" placeholder="Username" value="" />
+      <form-control-errors [control]="this.form.controls['username']"> </form-control-errors>
+    </div>
+    <div class="input">
+      <label for="password">Password *</label>
+      <input formControlName="password" id="password" name="var_password" placeholder="Password" value="" type="text" />
+      <form-control-errors [control]="this.form.controls['password']"> </form-control-errors>
+    </div>
+    <div class="input">
+      <label for="email">Email Address *</label>
+      <input formControlName="email" id="email" name="var_email" placeholder="Email" value="" type="text" />
+      <form-control-errors [control]="this.form.controls['email']"> </form-control-errors>
+    </div>
+    <div class="error-message" *ngIf="this.erorMessage">
+      <p>
+        {{ this.erorMessage }}
+      </p>
+    </div>
+    <!-- <p class="input-lost-pass">Lost your code? <a (click)="this.resendCode()">Resend Code</a></p> -->
   </div>
 
   <footer>
     <p>Have an account? <a (click)="changeState(authState.Login)">Sign in</a></p>
-    <button aria-label="sign up" type="submit" [disabled]="!this.form.valid || !this.formIsDirty(this.form)">
+    <button
+      class="button-success"
+      aria-label="sign up"
+      type="submit"
+      [disabled]="!this.form.valid || !this.formIsDirty(this.form)"
+    >
       Create Account
     </button>
   </footer>

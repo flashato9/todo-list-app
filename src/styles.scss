@@ -28,13 +28,34 @@ app-root {
 }
 .dialog-box-login {
   justify-content: center;
+  align-items: center;
   mat-dialog-container {
     background-color: $background-color;
     padding: $sectioning-container-padding;
     width: 50%;
+    height: fit-content;
     @media screen and (max-width: $laptopL-screen) {
       width: 100%;
       align-items: center;
     }
   }
+}
+.dialog-box-loading {
+  justify-content: center;
+  align-items: center;
+  mat-dialog-container {
+    background-color: transparent;
+    padding: $sectioning-container-padding;
+    width: 0;
+    height: 0;
+    @media screen and (max-width: $laptopL-screen) {
+      width: 0;
+      height: 0;
+      align-items: center;
+    }
+  }
+}
+
+.dialog-backdrop-loading {
+  background-color: rgba(0, 0, 0, 0.103);
 }
