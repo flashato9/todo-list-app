@@ -1,4 +1,6 @@
 {
+    "identityPoolName": "todolist268ebaeb_identitypool_268ebaeb",
+    "allowUnauthenticatedIdentities": false,
     "resourceNameTruncated": "todoli268ebaeb",
     "userPoolName": "todolist268ebaeb_userpool_268ebaeb",
     "autoVerifiedAttributes": [
@@ -10,9 +12,9 @@
     ],
     "smsAuthenticationMessage": "Your authentication code is {####}",
     "smsVerificationMessage": "Your verification code is {####}",
-    "emailVerificationSubject": "Todo-List Verification Code",
-    "emailVerificationMessage": "Thank you for joining the squad. Your verification code is {####}.",
-    "defaultPasswordPolicy": true,
+    "emailVerificationSubject": "Your verification code",
+    "emailVerificationMessage": "Your verification code is {####}",
+    "defaultPasswordPolicy": false,
     "passwordPolicyMinLength": 8,
     "passwordPolicyCharacters": [],
     "requiredAttributes": [
@@ -27,10 +29,10 @@
         "email"
     ],
     "userpoolClientLambdaRole": "todoli268ebaeb_userpoolclient_lambda_role",
-    "userpoolClientSetAttributes": true,
+    "userpoolClientSetAttributes": false,
     "sharedId": "268ebaeb",
     "resourceName": "todolist268ebaeb",
-    "authSelections": "userPoolOnly",
+    "authSelections": "identityPoolAndUserPool",
     "authRoleArn": {
         "Fn::GetAtt": [
             "AuthRole",
@@ -43,7 +45,7 @@
             "Arn"
         ]
     },
-    "useDefault": "manual",
+    "useDefault": "default",
     "triggers": "{}",
     "userPoolGroupList": [],
     "serviceName": "Cognito",
@@ -53,9 +55,5 @@
     },
     "breakCircularDependency": true,
     "permissions": [],
-    "dependsOn": [],
-    "userPoolGroups": false,
-    "adminQueries": false,
-    "hostedUI": false,
-    "authProviders": []
+    "dependsOn": []
 }

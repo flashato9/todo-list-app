@@ -4,7 +4,6 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { DatabaseContactorService } from 'src/app/services/database-contactor.service';
-import { TodoListItem } from 'src/app/services/http-todo.service';
 
 @Component({
   selector: 'app-create-todo-list-form',
@@ -16,7 +15,7 @@ export class CreateTodoListFormComponent implements OnInit, OnDestroy {
   private _thisIsACreateForm: boolean = true;
   private _thisIsAnUpdateForm: boolean = false;
 
-  private todoItem: TodoListItem = { id: -1, title: '', description: '' };
+  private todoItem: any = { id: -1, title: '', description: '' };
   form = this.fb.group({ title: [''], description: [''] });
 
   private subs: Subscription = new Subscription();
@@ -79,5 +78,5 @@ export class CreateTodoListFormComponent implements OnInit, OnDestroy {
 export interface CreateTodoDialogData {
   thisIsACreateForm: boolean;
   thisIsAnUpdateForm: boolean;
-  todoItem: TodoListItem;
+  todoItem: any;
 }

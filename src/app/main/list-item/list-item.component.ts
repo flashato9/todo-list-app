@@ -5,7 +5,6 @@ import {
   CreateTodoDialogData,
   CreateTodoListFormComponent,
 } from 'src/app/header/create-todo-list-form/create-todo-list-form.component';
-import { TodoListItem } from 'src/app/services/http-todo.service';
 
 @Component({
   selector: 'list-item',
@@ -16,8 +15,8 @@ export class ListItemComponent implements OnInit {
   private _descriptionShouldBeShowing: boolean = false;
   private _currentlyUpdatingItem: boolean = false;
 
-  @Input() listItemData: TodoListItem = { id: -1, title: '', description: '' };
-  @Output() delete = new EventEmitter<TodoListItem>();
+  @Input() listItemData: any = { id: -1, title: '', description: '' };
+  @Output() delete = new EventEmitter<any>();
 
   constructor(public dialog: MatDialog) {}
 
