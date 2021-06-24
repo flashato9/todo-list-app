@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Auth } from 'aws-amplify';
+import { UserAuthInterfaceService } from 'src/app/services/user-auth-interface.service';
 import { UserInterfaceService } from 'src/app/services/user-interface.service';
 import { CustomValidators } from '../authentication/base/validator-functions/custom-validators';
 import { BaseAuthenticationComponent } from '../base-components/base-authentication/base-authentication.component';
@@ -14,7 +14,7 @@ import { MAX_PASSWORD_LENGTH, MIN_PASSWORD_LENGTH } from '../base-components/con
 export class RecoveryMenuComponent extends BaseAuthenticationComponent implements OnInit {
   isCodeVerificationStage: boolean = false;
   previousStageForm: FormGroup | undefined;
-  constructor(public fb: FormBuilder, public uI: UserInterfaceService) {
+  constructor(public fb: FormBuilder, public uI: UserInterfaceService, public uAI: UserAuthInterfaceService) {
     super(
       fb.group({
         username: ['', Validators.required],
@@ -26,31 +26,22 @@ export class RecoveryMenuComponent extends BaseAuthenticationComponent implement
 
   async sendCode() {
     try {
-      this.uI.letItBeKnownUiIsLoading();
       const username = this.form.controls['username'].value;
-      const result = await Auth.forgotPassword(username);
-      this.uI.letItBeKnownUiIsNotLoading();
-      console.log('Result after sending code:', result);
-
+      await this.uAI.exposedService.sendForgotPasswordCode(username);
       this.setResetPasswordFormMode();
       console.log('✔️ Code send successful');
     } catch (error) {
-      this.uI.letItBeKnownUiIsNotLoading();
       console.log('❌ Error sending code: \n', error);
       this.erorMessage = (<any>error).message + '.';
     }
   }
   async resendCode() {
     try {
-      this.uI.letItBeKnownUiIsLoading();
       const username = this.previousStageForm?.controls['username'].value;
-      const result = await Auth.forgotPassword(username);
-      this.uI.letItBeKnownUiIsNotLoading();
-      console.log('Result after re-sending code:', result);
+      await this.uAI.exposedService.sendForgotPasswordCode(username);
 
       console.log('✔️ Code re-send successful');
     } catch (error) {
-      this.uI.letItBeKnownUiIsNotLoading();
       console.log('❌ Error re-sending code: \n', error);
       this.erorMessage = (<any>error).message + '.';
     }
@@ -75,17 +66,14 @@ export class RecoveryMenuComponent extends BaseAuthenticationComponent implement
   }
   async createPassword() {
     try {
-      this.uI.letItBeKnownUiIsLoading();
       const username = (<FormGroup>this.previousStageForm).controls['username'].value;
-      const code = (<number>this.form.controls['verification_code'].value).toString();
+      const confirmationCode = (<number>this.form.controls['verification_code'].value).toString();
       const password = this.form.controls['new_password'].value;
+      await this.uAI.exposedService.createNewPassword(username, confirmationCode, password);
 
-      await Auth.forgotPasswordSubmit(username, code, password);
-      this.uI.letItBeKnownUiIsNotLoading();
       this.changeState(this.authState.Login);
       console.log('✔️ Password Changed successful');
     } catch (error) {
-      this.uI.letItBeKnownUiIsNotLoading();
       console.log('❌ Error changing password: \n', error);
       this.erorMessage = (<any>error).message + '.';
     }

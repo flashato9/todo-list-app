@@ -11,8 +11,6 @@ export class BaseAuthenticationComponent {
   @Output() onRequestStateChange: EventEmitter<AuthState> = new EventEmitter();
   readonly authState = AuthState;
 
-  @Output() onSuccessfulSubmit: EventEmitter<User> = new EventEmitter();
-
   form: FormGroup;
 
   erorMessage: string = '';

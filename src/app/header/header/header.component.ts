@@ -6,8 +6,7 @@ import {
   CreateTodoDialogData,
   CreateTodoListFormComponent,
 } from 'src/app/header/create-todo-list-form/create-todo-list-form.component';
-import { UserAuthenticationService } from 'src/app/services/user-authentication.service';
-import { UserInterfaceService } from 'src/app/services/user-interface.service';
+import { UserAuthInterfaceService } from 'src/app/services/user-auth-interface.service';
 
 @Component({
   selector: 'app-header',
@@ -15,8 +14,8 @@ import { UserInterfaceService } from 'src/app/services/user-interface.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  constructor(public uA: UserAuthenticationService, public dialog: MatDialog, public uI: UserInterfaceService) {
-    this.uA.checkIfSessionIsActive();
+  constructor(public uAI: UserAuthInterfaceService, public dialog: MatDialog) {
+    this.uAI.exposedService.checkIfSessionIsActive();
   }
   //
   ngOnInit(): void {}
@@ -38,12 +37,10 @@ export class HeaderComponent implements OnInit {
   }
   async logOff() {
     try {
-      this.uI.letItBeKnownUiIsLoading();
-      await this.uA.signOutUser();
-      this.uI.letItBeKnownUiIsNotLoading();
+      await this.uAI.exposedService.signOutUser();
+
       console.log('Logged off');
     } catch (error) {
-      this.uI.letItBeKnownUiIsNotLoading();
       console.log('Error signing out user: ', error);
     }
   }

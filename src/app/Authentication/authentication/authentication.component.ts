@@ -1,28 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { UserAuthenticationService } from 'src/app/services/user-authentication.service';
-import { User } from '../base-components/base-authentication/base-authentication.component';
+import { Subscription } from 'rxjs';
+import { UserAuthInterfaceService } from 'src/app/services/user-auth-interface.service';
 
 @Component({
   selector: 'app-authentication',
   templateUrl: './authentication.component.html',
   styleUrls: ['./authentication.component.scss'],
 })
-export class AuthenticationComponent implements OnInit {
+export class AuthenticationComponent implements OnInit, OnDestroy {
   authenticationState: AuthState = AuthState.Login;
   readonly authState = AuthState;
 
-  constructor(public dialogRef: MatDialogRef<AuthenticationComponent>, public uA: UserAuthenticationService) {}
+  sub$d!: Subscription;
+  constructor(public dialogRef: MatDialogRef<AuthenticationComponent>, public uAI: UserAuthInterfaceService) {
+    this.sub$d = this.uAI.exposedService.isLoggedIn$.subscribe((value) => {
+      if (value) {
+        this.dialogRef.close();
+      }
+    });
+  }
 
   ngOnInit() {}
   setAuthenticationState(state: AuthState) {
     this.authenticationState = state;
   }
-  completeAuthentication(user: User) {
-    console.log('Authentication Complete:');
-    console.log('User:', user);
-    this.dialogRef.close();
-    this.uA.letItBeKnownLoggedIn();
+  ngOnDestroy() {
+    this.sub$d.unsubscribe();
   }
 }
 export enum AuthState {

@@ -1,8 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
-import { Auth } from 'aws-amplify';
-import { UserInterfaceService } from 'src/app/services/user-interface.service';
-import { BaseAuthenticationComponent, User } from '../base-components/base-authentication/base-authentication.component';
+import { UserAuthInterfaceService } from 'src/app/services/user-auth-interface.service';
+import { BaseAuthenticationComponent } from '../base-components/base-authentication/base-authentication.component';
 
 @Component({
   selector: 'log-in-menu',
@@ -14,7 +13,7 @@ export class LogInMenuComponent extends BaseAuthenticationComponent implements O
   triggerOptionToEnterRecoveryMode: boolean = false;
   usernameControl: AbstractControl;
   passwordControl: AbstractControl;
-  constructor(public fb: FormBuilder, public uI: UserInterfaceService) {
+  constructor(public fb: FormBuilder, public uAI: UserAuthInterfaceService) {
     super(
       fb.group(
         {
@@ -38,16 +37,11 @@ export class LogInMenuComponent extends BaseAuthenticationComponent implements O
   }
   async signIn() {
     try {
-      this.uI.letItBeKnownUiIsLoading();
       const username = this.form.controls['username'].value;
       const password = this.form.controls['password'].value;
-
-      const user = await Auth.signIn(username, password);
-      this.uI.letItBeKnownUiIsNotLoading();
-      this.onSuccessfulSubmit.emit(<User>user);
+      await this.uAI.exposedService.signInUser(username, password);
       console.log('✔️ Sign In successful');
     } catch (error) {
-      this.uI.letItBeKnownUiIsNotLoading();
       console.log('❌ Error sign in: \n', error);
 
       if ((<any>error).code === 'UserNotConfirmedException') {

@@ -1,27 +1,25 @@
 import { Injectable } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { BehaviorSubject } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
+import { take } from 'rxjs/operators';
 import { LoadingComponent } from '../global-ui/loading/loading.component';
+import { UserAuthInterfaceService } from './user-auth-interface.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserInterfaceService {
-  private Loading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  isLoading$ = this.Loading$.asObservable();
-  isNotLoading$ = this.Loading$.pipe(map((val) => !val));
   dialogRef!: MatDialogRef<LoadingComponent, any>;
-  constructor(public dialog: MatDialog) {}
+  sub$d: Subscription;
+  constructor(public dialog: MatDialog, public uAI: UserAuthInterfaceService) {
+    this.sub$d = this.uAI.exposedService.isPerformingBlockingAsyncCall$.subscribe((value) => {
+      if (value) this.openLoadingComponent();
+      else {
+        if (this.dialogRef) this.dialogRef.close();
+      }
+    });
+  }
 
-  letItBeKnownUiIsLoading() {
-    this.Loading$.next(true);
-    this.openLoadingComponent();
-  }
-  letItBeKnownUiIsNotLoading() {
-    this.Loading$.next(false);
-    this.dialogRef?.close();
-  }
   private openLoadingComponent() {
     this.dialogRef = this.dialog.open(LoadingComponent, {
       width: '100%',
@@ -38,12 +36,12 @@ export class UserInterfaceService {
     dR.afterOpened()
       .pipe(take(1))
       .subscribe(() => {
-        console.log(`Dialog AuthenticationComponent has opened...`);
+        console.log(`Dialog LoadingComponent has opened...`);
       });
     dR.afterClosed()
       .pipe(take(1))
       .subscribe(() => {
-        console.log(`Dialog AuthenticationComponent has closed...`);
+        console.log(`Dialog LoadingComponent has closed...`);
       });
   }
 }

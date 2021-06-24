@@ -19,11 +19,11 @@ import { LogInMenuComponent } from './Authentication/log-in-menu/log-in-menu.com
 import { RecoveryMenuComponent } from './Authentication/recovery-menu/recovery-menu.component';
 import { SignUpMenuComponent } from './Authentication/sign-up-menu/sign-up-menu.component';
 import { SignupConfirmationComponent } from './Authentication/sign-up-menu/signup-confirmation/signup-confirmation.component';
+import { LoadingComponent } from './global-ui/loading/loading.component';
 import { CreateTodoListFormComponent } from './header/create-todo-list-form/create-todo-list-form.component';
 import { HeaderComponent } from './header/header/header.component';
 import { ListItemComponent } from './main/list-item/list-item.component';
 import { MainComponent } from './main/main/main.component';
-import { LoadingComponent } from './global-ui/loading/loading.component';
 /* Configure Amplify resources */
 Amplify.configure(awsconfig);
 

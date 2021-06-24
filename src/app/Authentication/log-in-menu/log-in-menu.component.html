@@ -53,7 +53,6 @@
   </footer>
 </form>
 <signup-confirmation-menu
-  (onSuccessfulSubmit)="this.onSuccessfulSubmit.emit($event)"
   (onRequestStateChange)="this.changeState($event)"
   *ngIf="this.isCodeVerificationStage"
   [usernameForForm]="this.form.controls['username'].value"

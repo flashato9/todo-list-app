@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Auth } from 'aws-amplify';
+import { UserAuthInterfaceService } from 'src/app/services/user-auth-interface.service';
 import { UserInterfaceService } from 'src/app/services/user-interface.service';
-import { BaseAuthenticationComponent, User } from '../../base-components/base-authentication/base-authentication.component';
+import { BaseAuthenticationComponent } from '../../base-components/base-authentication/base-authentication.component';
 import { VERIFICATION_CODE_REGEX } from '../../base-components/constants/form-constants';
 
 @Component({
@@ -13,7 +13,7 @@ import { VERIFICATION_CODE_REGEX } from '../../base-components/constants/form-co
 export class SignupConfirmationComponent extends BaseAuthenticationComponent implements OnInit {
   @Input() usernameForForm: string = '';
 
-  constructor(public fb: FormBuilder, public uI: UserInterfaceService) {
+  constructor(public fb: FormBuilder, public uI: UserInterfaceService, public uAI: UserAuthInterfaceService) {
     super(
       fb.group({
         username: ['', Validators.required],
@@ -28,27 +28,21 @@ export class SignupConfirmationComponent extends BaseAuthenticationComponent imp
   }
   async confirmSignUp() {
     try {
-      this.uI.letItBeKnownUiIsLoading();
-      console.log(this.form.controls['username'].value, this.form.controls['confirmation_code'].value.toString());
-      await Auth.confirmSignUp(this.form.controls['username'].value, this.form.controls['confirmation_code'].value.toString());
-      const user: User = await Auth.currentUserPoolUser();
-      this.uI.letItBeKnownUiIsNotLoading();
-      this.onSuccessfulSubmit.emit(user);
+      const username: string = this.form.controls['username'].value;
+      const confirmationCode: string = this.form.controls['confirmation_code'].value.toString();
+      await this.uAI.exposedService.confirmSignUp(username, confirmationCode);
       console.log('✔️ Successfully confirmed code');
     } catch (error) {
-      this.uI.letItBeKnownUiIsNotLoading();
       console.log('❌ Error confirming code: \n', error);
       this.erorMessage = (<any>error).message + '.';
     }
   }
   async resendCode() {
     try {
-      this.uI.letItBeKnownUiIsLoading();
-      await Auth.resendSignUp(this.form.controls['username'].value);
-      this.uI.letItBeKnownUiIsNotLoading();
+      const username: string = this.form.controls['username'].value;
+      await this.uAI.exposedService.resendSignUpCode(username);
       console.log('✔️ Successfully re-sent code');
     } catch (error) {
-      this.uI.letItBeKnownUiIsNotLoading();
       console.log('❌ Error re-sending code: \n', error);
       this.erorMessage = (<any>error).message + '.';
     }

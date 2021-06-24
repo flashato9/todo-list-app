@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { SignUpParams } from '@aws-amplify/auth/lib-esm/types';
-import { Auth } from 'aws-amplify';
+import { UserAuthInterfaceService } from 'src/app/services/user-auth-interface.service';
+import { SignUpParams } from 'src/app/services/user-authentication.service';
 import { UserInterfaceService } from 'src/app/services/user-interface.service';
 import { CustomValidators } from '../authentication/base/validator-functions/custom-validators';
 import { BaseAuthenticationComponent } from '../base-components/base-authentication/base-authentication.component';
@@ -19,7 +19,7 @@ import {
 })
 export class SignUpMenuComponent extends BaseAuthenticationComponent implements OnInit {
   isCodeVerificationStage: boolean = false;
-  constructor(public fb: FormBuilder, public uI: UserInterfaceService) {
+  constructor(public fb: FormBuilder, public uI: UserInterfaceService, public uAI: UserAuthInterfaceService) {
     super(
       fb.group({
         username: [
@@ -51,7 +51,6 @@ export class SignUpMenuComponent extends BaseAuthenticationComponent implements 
   }
   async createAccount() {
     try {
-      this.uI.letItBeKnownUiIsLoading();
       const config: SignUpParams = {
         username: this.form.controls['username'].value,
         password: this.form.controls['password'].value,
@@ -59,12 +58,10 @@ export class SignUpMenuComponent extends BaseAuthenticationComponent implements 
           email: this.form.controls['email'].value,
         },
       };
-      await Auth.signUp(config);
-      this.uI.letItBeKnownUiIsNotLoading();
+      await this.uAI.exposedService.createAccount(config);
       this.setCodeVerificationMode();
       console.log('✔️ Create account successful');
     } catch (error) {
-      this.uI.letItBeKnownUiIsNotLoading();
       console.log('❌ Error creating account: \n', error);
 
       this.erorMessage = (<any>error).message + '.';
