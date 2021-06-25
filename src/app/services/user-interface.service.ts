@@ -3,7 +3,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { LoadingComponent } from '../global-ui/loading/loading.component';
-import { UserAuthInterfaceService } from './user-auth-interface.service';
+import { UserAuthInterfaceService } from './user-authentication/user-auth-interface.service';
 
 @Injectable({
   providedIn: 'root',

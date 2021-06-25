@@ -1,7 +1,7 @@
 import { CognitoUser } from 'amazon-cognito-identity-js';
 import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { SignUpParams, UserAuthenticationService } from 'src/app/services/user-authentication.service';
+import { SignUpParams, UserAuthenticationService } from 'src/app/services/user-authentication/user-authentication.service';
 
 export class TestUserAuthenticationService extends UserAuthenticationService implements UserAuthenticationService {
   protected LoggedIn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);

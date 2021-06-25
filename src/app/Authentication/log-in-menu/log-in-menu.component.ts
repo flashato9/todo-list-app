@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
-import { UserAuthInterfaceService } from 'src/app/services/user-auth-interface.service';
+import { UserAuthInterfaceService } from 'src/app/services/user-authentication/user-auth-interface.service';
 import { BaseAuthenticationComponent } from '../base-components-and-functions/base-authentication/base-authentication.component';
 
 @Component({

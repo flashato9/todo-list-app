@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DatabaseContactorService } from 'src/app/services/database-contactor.service';
-import { UserAuthInterfaceService } from 'src/app/services/user-auth-interface.service';
+import { UserAuthInterfaceService } from 'src/app/services/user-authentication/user-auth-interface.service';
 
 @Component({
   selector: 'app-main',

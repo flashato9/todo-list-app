@@ -6,7 +6,7 @@ import {
   CreateTodoDialogData,
   CreateTodoListFormComponent,
 } from 'src/app/header/create-todo-list-form/create-todo-list-form.component';
-import { UserAuthInterfaceService } from 'src/app/services/user-auth-interface.service';
+import { UserAuthInterfaceService } from 'src/app/services/user-authentication/user-auth-interface.service';
 
 @Component({
   selector: 'app-header',

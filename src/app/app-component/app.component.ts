@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { UserAuthInterfaceService } from '../services/user-auth-interface.service';
-import { UserInterfaceService } from '../services/user-interface.service';
+import { UserAuthInterfaceService } from '../services/user-authentication/user-auth-interface.service';
 
 @Component({
   selector: 'app-root',
@@ -8,6 +7,6 @@ import { UserInterfaceService } from '../services/user-interface.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  constructor(public uAI: UserAuthInterfaceService, ui: UserInterfaceService) {}
+  constructor(public uAI: UserAuthInterfaceService) {}
   ngOnInit() {}
 }
