@@ -3,14 +3,14 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { UserAuthInterfaceService } from 'src/app/services/user-auth-interface.service';
 import { SignUpParams } from 'src/app/services/user-authentication.service';
 import { UserInterfaceService } from 'src/app/services/user-interface.service';
-import { CustomValidators } from '../authentication/base/validator-functions/custom-validators';
-import { BaseAuthenticationComponent } from '../base-components/base-authentication/base-authentication.component';
+import { BaseAuthenticationComponent } from '../base-components-and-functions/base-authentication/base-authentication.component';
 import {
   MAX_PASSWORD_LENGTH,
   MAX_USERNAME_LENGTH,
   MIN_PASSWORD_LENGTH,
   MIN_USERNAME_LENGTH,
-} from '../base-components/constants/form-constants';
+} from '../base-components-and-functions/form-constants/form-constants';
+import { CustomValidators } from '../base-components-and-functions/validators/custom-validators';
 
 @Component({
   selector: 'sign-up-menu',

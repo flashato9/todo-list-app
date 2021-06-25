@@ -1,24 +1,12 @@
 import { AbstractControl, ValidationErrors } from '@angular/forms';
 
-export class CustomValidators {
-  static numbersOnly(control: AbstractControl): ValidationErrors | null {
-    return numbersOnlyValidator(control);
-  }
-  static strongPassword(control: AbstractControl): ValidationErrors | null {
-    return strongPasswordValidator(control);
-  }
-  static validUsername(control: AbstractControl): ValidationErrors | null {
-    return validUsernameValidator(control);
-  }
-}
-
-function numbersOnlyValidator(control: AbstractControl): ValidationErrors | null {
+export function numbersOnlyValidator(control: AbstractControl): ValidationErrors | null {
   if (isEmptyInputValue(control.value)) {
     return null; // don't validate empty values to allow optional controls
   }
   return /\d/.test(control.value) ? null : { numbersonly: true };
 }
-function strongPasswordValidator(control: AbstractControl): ValidationErrors | null {
+export function strongPasswordValidator(control: AbstractControl): ValidationErrors | null {
   if (isEmptyInputValue(control.value)) {
     return null; // don't validate empty values to allow optional controls
   } else {
@@ -42,7 +30,7 @@ function strongPasswordValidator(control: AbstractControl): ValidationErrors | n
     return null;
   }
 }
-function validUsernameValidator(control: AbstractControl): ValidationErrors | null {
+export function validUsernameValidator(control: AbstractControl): ValidationErrors | null {
   if (isEmptyInputValue(control.value)) {
     return null; // don't validate empty values to allow optional controls
   } else {
@@ -56,15 +44,6 @@ function isEmptyInputValue(value: any): boolean {
   // we don't check for string here so it also works with arrays
   return value == null || value.length === 0;
 }
-
-//For rereference when creating a validor
-
-//
-// static min(min: number): ValidatorFn {
-//   return minValidator(min);
-// }
-
-//
 
 // function minValidator(min: number): ValidatorFn {
 //   return (control: AbstractControl): ValidationErrors | null => {
