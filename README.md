@@ -8,6 +8,6 @@ The app utilises AWS Amplify workflow to implement storage persistence and user 
 
 # Pictures of app:
 
-![sign in](https://github.com/flashato9/todo-list-app/blob/main/github/images/img_1.png?raw=true)
-![sign in part 2](https://github.com/flashato9/todo-list-app/blob/main/github/images/img_2.png?raw=true)
-![view descriptions](https://github.com/flashato9/todo-list-app/blob/main/github/images/img_3.png?raw=true)
+![sign in](https://github.com/flashato9/todo-list-app/blob/main/github/images/img_1.PNG)
+![sign in part 2](https://github.com/flashato9/todo-list-app/blob/main/github/images/img_2.PNG)
+![view descriptions](https://github.com/flashato9/todo-list-app/blob/main/github/images/img_3.PNG)
