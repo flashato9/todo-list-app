@@ -56,6 +56,7 @@ export class SignUpMenuComponent extends BaseAuthenticationComponent implements 
         password: this.form.controls['password'].value,
         attributes: {
           email: this.form.controls['email'].value,
+          preferred_username: this.form.controls['username'].value,
         },
       };
       await this.uAI.exposedService.createAccount(config);

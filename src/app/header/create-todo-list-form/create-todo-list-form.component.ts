@@ -37,6 +37,7 @@ export class CreateTodoListFormComponent implements OnInit, OnDestroy {
       const description = this.form.controls['description'].value;
       try {
         await this.dC.createNewTodo({ username: username, title: title, description: description });
+        console.log('Succesfully created Todo');
       } catch (error) {
         console.log('Error occured trying to create todo list item.', error);
       }
@@ -47,6 +48,7 @@ export class CreateTodoListFormComponent implements OnInit, OnDestroy {
       const description = this.form.controls['description'].value;
       try {
         await this.dC.updateTodo({ id: id, username: username, title: title, description: description });
+        console.log('Succesfully updated Todo');
       } catch (error) {
         console.log('Error occured trying to update todo list item.', error);
       }

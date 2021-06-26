@@ -1,0 +1,9 @@
+type Todo @model @key(name: "todosByUsername", fields: ["username", "createdAt"], queryField: "todosByUsername") @auth(rules: [{allow: public}]) {
+  id: ID!
+  username: String!
+  title: String!
+  description: String!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+ 

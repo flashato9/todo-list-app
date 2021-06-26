@@ -132,5 +132,6 @@ export interface SignUpParams {
   password: string;
   attributes: {
     email: string;
+    preferred_username: string;
   };
 }

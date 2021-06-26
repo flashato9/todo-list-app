@@ -1,8 +1,8 @@
 {
-    "identityPoolName": "thirdtodoappa06b4e5e_identitypool_a06b4e5e",
+    "identityPoolName": "testAuthIdentityPool",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "thirdta06b4e5e",
-    "userPoolName": "thirdtodoappa06b4e5e_userpool_a06b4e5e",
+    "resourceNameTruncated": "todolifda9434b",
+    "userPoolName": "todolistapp",
     "autoVerifiedAttributes": [
         "email"
     ],
@@ -12,26 +12,23 @@
     ],
     "smsAuthenticationMessage": "Your authentication code is {####}",
     "smsVerificationMessage": "Your verification code is {####}",
-    "emailVerificationSubject": "Your verification code",
-    "emailVerificationMessage": "Your verification code is {####}",
+    "emailVerificationSubject": "Forgot password code: {####}",
+    "emailVerificationMessage": "Forgot password code: {####}",
     "defaultPasswordPolicy": false,
     "passwordPolicyMinLength": 8,
     "passwordPolicyCharacters": [],
     "requiredAttributes": [
+        "preferred_username",
         "email"
     ],
     "userpoolClientGenerateSecret": false,
     "userpoolClientRefreshTokenValidity": 30,
-    "userpoolClientWriteAttributes": [
-        "email"
-    ],
-    "userpoolClientReadAttributes": [
-        "email"
-    ],
-    "userpoolClientLambdaRole": "thirdta06b4e5e_userpoolclient_lambda_role",
+    "userpoolClientWriteAttributes": [],
+    "userpoolClientReadAttributes": [],
+    "userpoolClientLambdaRole": "todolifda9434b_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "a06b4e5e",
-    "resourceName": "thirdtodoappa06b4e5e",
+    "sharedId": "fda9434b",
+    "resourceName": "todolistapp",
     "authSelections": "identityPoolAndUserPool",
     "authRoleArn": {
         "Fn::GetAtt": [
@@ -45,9 +42,13 @@
             "Arn"
         ]
     },
-    "useDefault": "default",
-    "userPoolGroupList": [],
     "serviceName": "Cognito",
+    "useDefault": "manual",
+    "userPoolGroups": false,
+    "userPoolGroupList": [],
+    "adminQueries": false,
+    "thirdPartyAuth": false,
+    "authProviders": [],
     "usernameCaseSensitive": false,
     "dependsOn": []
 }

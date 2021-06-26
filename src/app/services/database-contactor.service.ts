@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
 import { GraphQLResult } from '@aws-amplify/api';
-import { API } from 'aws-amplify';
+import { DataStore } from 'aws-amplify';
 import { BehaviorSubject } from 'rxjs';
-import { tap } from 'rxjs/operators';
-import { CreateTodoInput, DeleteTodoInput, ModelSortDirection, UpdateTodoInput } from 'src/API';
-import * as mutations from 'src/graphql/mutations';
-import * as query from 'src/graphql/queries';
+import { take, tap } from 'rxjs/operators';
+import { Todo } from 'src/models';
 import { UserAuthInterfaceService } from './user-authentication/user-auth-interface.service';
 @Injectable({
   providedIn: 'root',
@@ -31,9 +29,17 @@ export class DatabaseContactorService {
   }
 
   async createNewTodo(todoItemDetails: CreateTodoData) {
-    const input: CreateTodoInput = todoItemDetails;
+    const createDate = new Date().toISOString();
     try {
-      const result = await API.graphql({ query: mutations.createTodo, variables: { input: input } });
+      const result = await DataStore.save(
+        new Todo({
+          username: todoItemDetails.username,
+          title: todoItemDetails.title,
+          description: todoItemDetails.description,
+          createdAt: createDate,
+          updatedAt: createDate,
+        })
+      );
       await this.getTodosListFor(todoItemDetails.username);
       const createdTodoItem = <CompleteTodoData>(<GraphQLResult<object>>result).data;
       return createdTodoItem;
@@ -43,37 +49,46 @@ export class DatabaseContactorService {
   }
   private async getTodosListFor(username: string) {
     try {
-      const result = await API.graphql({
-        query: query.todosByUsername,
-        variables: { username: username, sortDirection: ModelSortDirection.ASC },
-      });
-      const todoList: CompleteTodoData[] = (<GraphQLResult<any>>result).data.todosByUsername.items;
-      this.todoList$s.next(todoList);
+      const result = await DataStore.query(Todo, (todo) => todo.username('eq', username));
+      this.todoList$s.next(result);
     } catch (error) {
       throw error;
     }
   }
   async updateTodo(todoItemDetails: UpdateTodoData) {
-    const input: UpdateTodoInput = todoItemDetails;
     try {
-      const result = await API.graphql({ query: mutations.updateTodo, variables: { input: input } });
+      const todo = await this.findTodoItem(todoItemDetails.id);
+      const updateDate = new Date().toISOString();
+      const result: CompleteTodoData = await DataStore.save(
+        Todo.copyOf(todo, (mutate) => {
+          mutate.title = todoItemDetails.title;
+          mutate.description = todoItemDetails.description;
+          mutate.updatedAt = updateDate;
+        })
+      );
       await this.getTodosListFor(todoItemDetails.username);
-      const updatedTodoItem = <CompleteTodoData>(<GraphQLResult<object>>result).data;
-      return updatedTodoItem;
+      return result;
     } catch (error) {
       throw error;
     }
   }
   async deleteTodo(todoItemDetails: DeleteTodoData) {
-    const input: DeleteTodoInput = { id: todoItemDetails.id };
-
     try {
-      const result = await API.graphql({ query: mutations.deleteTodo, variables: { input: input } });
+      const todo = await this.findTodoItem(todoItemDetails.id);
+      const result = await DataStore.delete(todo);
       await this.getTodosListFor(todoItemDetails.username);
-      const deletedTodoItem = <CompleteTodoData>(<GraphQLResult<object>>result).data;
-      return deletedTodoItem;
+      return result;
     } catch (error) {
       throw error;
+    }
+  }
+  private async findTodoItem(id: string) {
+    const todoList = await this.todoList$.pipe(take(1)).toPromise();
+    if (todoList.length === 0) {
+      throw new Error(`todoList$ is empty. No item with id=${id}, was found.`);
+    } else {
+      const todo = todoList.filter((item) => item.id === id)[0];
+      return todo;
     }
   }
 }

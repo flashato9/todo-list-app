@@ -1,6 +1,6 @@
 {
   "auth": {
-    "thirdtodoappa06b4e5e": {
+    "todolistapp": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
@@ -8,7 +8,7 @@
     }
   },
   "api": {
-    "thirdtodoapp": {
+    "todoapi2": {
       "service": "AppSync",
       "providerPlugin": "awscloudformation",
       "output": {
@@ -16,11 +16,15 @@
           "defaultAuthentication": {
             "authenticationType": "API_KEY",
             "apiKeyConfig": {
-              "apiKeyExpirationDays": 300,
-              "description": "todos"
+              "apiKeyExpirationDays": 30,
+              "description": "api key description"
             }
           },
-          "additionalAuthenticationProviders": []
+          "additionalAuthenticationProviders": [
+            {
+              "authenticationType": "AWS_IAM"
+            }
+          ]
         }
       }
     }

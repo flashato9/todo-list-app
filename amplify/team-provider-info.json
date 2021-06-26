@@ -1,19 +1,20 @@
 {
-  "develop": {
+  "staging": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-thirdtodoapp-develop-185802-authRole",
-      "UnauthRoleArn": "arn:aws:iam::065366914085:role/amplify-thirdtodoapp-develop-185802-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::065366914085:role/amplify-thirdtodoapp-develop-185802-authRole",
+      "AuthRoleName": "amplify-todolistapp-staging-121035-authRole",
+      "UnauthRoleArn": "arn:aws:iam::065366914085:role/amplify-todolistapp-staging-121035-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::065366914085:role/amplify-todolistapp-staging-121035-authRole",
       "Region": "us-east-2",
-      "DeploymentBucketName": "amplify-thirdtodoapp-develop-185802-deployment",
-      "UnauthRoleName": "amplify-thirdtodoapp-develop-185802-unauthRole",
-      "StackName": "amplify-thirdtodoapp-develop-185802",
-      "StackId": "arn:aws:cloudformation:us-east-2:065366914085:stack/amplify-thirdtodoapp-develop-185802/ccf6a250-d608-11eb-9fac-02e9025888d0",
-      "AmplifyAppId": "d2uyd7x5kfybok"
+      "DeploymentBucketName": "amplify-todolistapp-staging-121035-deployment",
+      "UnauthRoleName": "amplify-todolistapp-staging-121035-unauthRole",
+      "StackName": "amplify-todolistapp-staging-121035",
+      "StackId": "arn:aws:cloudformation:us-east-2:065366914085:stack/amplify-todolistapp-staging-121035/837b4bc0-d677-11eb-823a-0ad539dc484a",
+      "AmplifyAppId": "d3w4h4mxb0zpo6",
+      "AuthTriggerTemplateURL": ""
     },
     "categories": {
       "auth": {
-        "thirdtodoappa06b4e5e": {}
+        "todolistapp": {}
       }
     }
   }
