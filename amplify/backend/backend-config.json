@@ -1,6 +1,6 @@
 {
   "auth": {
-    "todolistapp": {
+    "todolist001": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
@@ -8,7 +8,7 @@
     }
   },
   "api": {
-    "todoapi2": {
+    "todolist001api": {
       "service": "AppSync",
       "providerPlugin": "awscloudformation",
       "output": {
@@ -27,6 +27,13 @@
           ]
         }
       }
+    }
+  },
+  "hosting": {
+    "amplifyhosting": {
+      "service": "amplifyhosting",
+      "providerPlugin": "awscloudformation",
+      "type": "manual"
     }
   }
 }

@@ -1,8 +1,5 @@
 {
-  "providers": [
-    "awscloudformation"
-  ],
-  "projectName": "todolistapp",
+  "projectName": "todolist001",
   "version": "3.1",
   "frontend": "javascript",
   "javascript": {
@@ -10,8 +7,11 @@
     "config": {
       "SourceDir": "src",
       "DistributionDir": "dist/todo-list",
-      "BuildCommand": "ng build",
+      "BuildCommand": "npm run-script build",
       "StartCommand": "ng serve"
     }
-  }
+  },
+  "providers": [
+    "awscloudformation"
+  ]
 }

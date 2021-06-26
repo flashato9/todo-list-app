@@ -1,5 +1,5 @@
 {
-  "AppSyncApiName": "todoapi2",
+  "AppSyncApiName": "todolist001api",
   "DynamoDBBillingMode": "PAY_PER_REQUEST",
   "DynamoDBEnableServerSideEncryption": false
 }

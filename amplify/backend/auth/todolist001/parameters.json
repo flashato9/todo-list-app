@@ -1,8 +1,8 @@
 {
     "identityPoolName": "testAuthIdentityPool",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "todolifda9434b",
-    "userPoolName": "todolistapp",
+    "resourceNameTruncated": "todoli0c15287b",
+    "userPoolName": "todolist001",
     "autoVerifiedAttributes": [
         "email"
     ],
@@ -25,10 +25,10 @@
     "userpoolClientRefreshTokenValidity": 30,
     "userpoolClientWriteAttributes": [],
     "userpoolClientReadAttributes": [],
-    "userpoolClientLambdaRole": "todolifda9434b_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "todoli0c15287b_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "fda9434b",
-    "resourceName": "todolistapp",
+    "sharedId": "0c15287b",
+    "resourceName": "todolist001",
     "authSelections": "identityPoolAndUserPool",
     "authRoleArn": {
         "Fn::GetAtt": [
