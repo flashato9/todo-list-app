@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { UserAuthInterfaceService } from 'src/app/services/user-authentication/user-auth-interface.service';
 import { UserInterfaceService } from 'src/app/services/user-interface.service';
@@ -12,7 +12,7 @@ import { VERIFICATION_CODE_REGEX } from '../../base-components-and-functions/for
 })
 export class SignupConfirmationComponent extends BaseAuthenticationComponent implements OnInit {
   @Input() usernameForForm: string = '';
-
+  @Output() onSignupConfirmed: EventEmitter<boolean> = new EventEmitter();
   constructor(public fb: FormBuilder, public uI: UserInterfaceService, public uAI: UserAuthInterfaceService) {
     super(
       fb.group({
@@ -31,6 +31,7 @@ export class SignupConfirmationComponent extends BaseAuthenticationComponent imp
       const username: string = this.form.controls['username'].value;
       const confirmationCode: string = this.form.controls['confirmation_code'].value.toString();
       await this.uAI.exposedService.confirmSignUp(username, confirmationCode);
+      this.onSignupConfirmed.emit(true);
       console.log('✔️ Successfully confirmed code');
     } catch (error) {
       console.log('❌ Error confirming code: \n', error);

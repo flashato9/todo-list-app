@@ -1,10 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { take } from 'rxjs/operators';
 import {
-  CreateTodoDialogData,
+  CreateOrUpdateTodoDialogData,
   CreateTodoListFormComponent,
 } from 'src/app/header/create-todo-list-form/create-todo-list-form.component';
+import { CompleteTodoData, DatabaseContactorService } from 'src/app/services/database-contactor.service';
+import { logTheDialog } from 'src/app/services/user-interface.service';
 
 @Component({
   selector: 'list-item',
@@ -12,38 +13,27 @@ import {
   styleUrls: ['./list-item.component.scss'],
 })
 export class ListItemComponent implements OnInit {
-  private _descriptionShouldBeShowing: boolean = false;
-  private _currentlyUpdatingItem: boolean = false;
+  descriptionShouldBeShowing: boolean = false;
+  currentlyUpdatingItem: boolean = false;
 
-  @Input() listItemData: any = { id: -1, title: '', description: '' };
-  @Output() delete = new EventEmitter<any>();
+  @Input() listItemData!: CompleteTodoData;
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog, public dC: DatabaseContactorService) {}
 
   ngOnInit(): void {}
   get title(): string {
     return this.listItemData.title;
   }
-  get descriptionShouldBeShowing() {
-    return this._descriptionShouldBeShowing;
-  }
-  set descriptionShouldBeShowing(value: boolean) {
-    this._descriptionShouldBeShowing = value;
-  }
   get descriptionParagraphData(): string[] {
     return this.listItemData.description.split('\n');
-    //TODO: override angular material typography to show serif and sansserif
-    //instead of roboto
-  }
-  get currentlyUpdatingItem() {
-    return this._currentlyUpdatingItem;
-  }
-  set currentlyUpdatingItem(value: boolean) {
-    this._currentlyUpdatingItem = value;
   }
   openUpdateWindow() {
     this.currentlyUpdatingItem = true;
-    const d_data: CreateTodoDialogData = { thisIsACreateForm: false, thisIsAnUpdateForm: true, todoItem: this.listItemData };
+    const d_data: CreateOrUpdateTodoDialogData = {
+      thisIsACreateForm: false,
+      thisIsAnUpdateForm: true,
+      todoItem: this.listItemData,
+    };
     const dialogRef = this.dialog.open(CreateTodoListFormComponent, {
       width: '100%',
       height: '80vh',
@@ -53,21 +43,14 @@ export class ListItemComponent implements OnInit {
       data: d_data,
     });
     //TODO: rename the add/update compoent to add/updateXdialog
-    dialogRef
-      .afterOpened()
-      .pipe(take(1))
-      .subscribe((result) => {
-        console.log(`Dialog CreateTodoListFormComponent has opened...`);
-      });
-    dialogRef
-      .afterClosed()
-      .pipe(take(1))
-      .subscribe((result) => {
-        console.log(`Dialog CreateTodoListFormComponent has closed...`);
-        this.currentlyUpdatingItem = !this.currentlyUpdatingItem;
-      });
+    logTheDialog(dialogRef, 'CreateTodoListFormComponent');
   }
-  deleteLItem() {
-    this.delete.emit(this.listItemData);
+  async deleteLItem() {
+    try {
+      await this.dC.deleteTodo(this.listItemData);
+      console.log('Successful deleting todo list item.');
+    } catch (error) {
+      console.log('Error deleteing todo list item.', error);
+    }
   }
 }

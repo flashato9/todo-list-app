@@ -9,11 +9,7 @@ import { UserAuthInterfaceService } from 'src/app/services/user-authentication/u
 })
 export class MainComponent implements OnInit, OnDestroy {
   constructor(public uAI: UserAuthInterfaceService, public dC: DatabaseContactorService) {
-    dC.getData()
-      .then((result) => {
-        console.log('Added to database:', result);
-      })
-      .catch(console.log);
+    //dC.getTodosListFor('flashato9').then(console.log).catch(console.log);
   }
   ngOnDestroy(): void {}
 

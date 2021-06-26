@@ -6,6 +6,7 @@ export const onCreateTodo = /* GraphQL */ `
   subscription OnCreateTodo {
     onCreateTodo {
       id
+      username
       title
       description
       createdAt
@@ -17,6 +18,7 @@ export const onUpdateTodo = /* GraphQL */ `
   subscription OnUpdateTodo {
     onUpdateTodo {
       id
+      username
       title
       description
       createdAt
@@ -28,6 +30,7 @@ export const onDeleteTodo = /* GraphQL */ `
   subscription OnDeleteTodo {
     onDeleteTodo {
       id
+      username
       title
       description
       createdAt

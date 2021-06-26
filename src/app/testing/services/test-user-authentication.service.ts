@@ -1,26 +1,24 @@
-import { CognitoUser } from 'amazon-cognito-identity-js';
 import { BehaviorSubject } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { SignUpParams, UserAuthenticationService } from 'src/app/services/user-authentication/user-authentication.service';
+import { map, tap } from 'rxjs/operators';
+import {
+  SignUpParams,
+  UserAccount,
+  UserAuthenticationService,
+} from 'src/app/services/user-authentication/user-authentication.service';
+import { UserInterfaceService } from 'src/app/services/user-interface.service';
 
 export class TestUserAuthenticationService extends UserAuthenticationService implements UserAuthenticationService {
-  protected LoggedIn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  isLoggedIn$ = this.LoggedIn$.asObservable();
+  private testUserAccount$s!: BehaviorSubject<UserAccount | undefined>;
+  isLoggedIn$ = this.userAccount$.pipe(map((user) => user !== undefined));
   isLoggedOut$ = this.isLoggedIn$.pipe(map((val) => !val));
-
-  constructor() {
-    super();
+  constructor(public uI: UserInterfaceService) {
+    super(uI);
+    this.isLoggedIn$.pipe(tap(console.log)).subscribe();
   }
-
-  protected cognitoUser!: CognitoUser;
-
-  protected performingBlockingAsyncCall$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  isPerformingBlockingAsyncCall$ = this.performingBlockingAsyncCall$.asObservable();
-
   async signOutUser() {
     try {
       this.setPerformingBlockingAsyncCall();
-      this.letItBeKnownLoggedOut();
+      this.testSetUserAccount(undefined);
       this.unSetPerformingBlockingAsyncCall();
     } catch (error) {
       this.unSetPerformingBlockingAsyncCall();
@@ -30,7 +28,9 @@ export class TestUserAuthenticationService extends UserAuthenticationService imp
   async checkIfSessionIsActive() {
     try {
       this.setPerformingBlockingAsyncCall();
-      this.letItBeKnownLoggedIn();
+      this.testUserAccount$s = new BehaviorSubject<UserAccount | undefined>(undefined);
+      this.userAccount$ = this.testUserAccount$s.asObservable();
+      this.testSetUserAccount(new UserAccount('dill'));
       this.unSetPerformingBlockingAsyncCall();
     } catch (error) {
       this.unSetPerformingBlockingAsyncCall();
@@ -40,7 +40,8 @@ export class TestUserAuthenticationService extends UserAuthenticationService imp
   async signInUser(username: string, password: string) {
     try {
       this.setPerformingBlockingAsyncCall();
-      this.letItBeKnownLoggedIn();
+
+      this.testSetUserAccount(new UserAccount('dill'));
       this.unSetPerformingBlockingAsyncCall();
     } catch (error) {
       this.unSetPerformingBlockingAsyncCall();
@@ -87,11 +88,14 @@ export class TestUserAuthenticationService extends UserAuthenticationService imp
   async confirmSignUp(username: string, confirmationCode: string) {
     try {
       this.setPerformingBlockingAsyncCall();
-      this.letItBeKnownLoggedIn();
+      this.testSetUserAccount(new UserAccount('dill'));
       this.unSetPerformingBlockingAsyncCall();
     } catch (error) {
       this.unSetPerformingBlockingAsyncCall();
       throw error;
     }
+  }
+  protected testSetUserAccount(userAccount: UserAccount | undefined) {
+    this.testUserAccount$s.next(userAccount);
   }
 }

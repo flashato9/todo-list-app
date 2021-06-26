@@ -1,29 +1,37 @@
 import Auth, { CognitoUser } from '@aws-amplify/auth';
 import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { UserInterfaceService } from '../user-interface.service';
 
 export class UserAuthenticationService {
-  protected LoggedIn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  isLoggedIn$ = this.LoggedIn$.asObservable();
+  private userAccount$s: BehaviorSubject<CognitoUser | undefined> = new BehaviorSubject<CognitoUser | undefined>(undefined);
+  userAccount$ = this.userAccount$s.asObservable().pipe(
+    map((user) => {
+      if (user !== undefined) {
+        return new UserAccount(user?.getUsername());
+      }
+      return undefined;
+    })
+  );
+  isLoggedIn$ = this.userAccount$.pipe(map((user) => user !== undefined));
   isLoggedOut$ = this.isLoggedIn$.pipe(map((val) => !val));
 
-  protected cognitoUser!: CognitoUser;
-
-  protected performingBlockingAsyncCall$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  isPerformingBlockingAsyncCall$ = this.performingBlockingAsyncCall$.asObservable();
-
-  constructor() {}
-  protected letItBeKnownLoggedIn() {
-    this.LoggedIn$.next(true);
+  constructor(public uI: UserInterfaceService) {
+    this.checkIfSessionIsActive()
+      .then((result) => {
+        console.log('User is currently logged in.');
+      })
+      .catch((error) => {
+        console.log('Error getting the current authenticated user.', error);
+      });
   }
-  protected letItBeKnownLoggedOut() {
-    this.LoggedIn$.next(false);
-  }
+
+  getAuthenticatedUser() {}
   async signOutUser() {
     try {
       this.setPerformingBlockingAsyncCall();
       await Auth.signOut();
-      this.letItBeKnownLoggedOut();
+      this.setUserAccount(undefined);
       this.unSetPerformingBlockingAsyncCall();
     } catch (error) {
       this.unSetPerformingBlockingAsyncCall();
@@ -32,20 +40,20 @@ export class UserAuthenticationService {
   }
   async checkIfSessionIsActive() {
     try {
-      this.cognitoUser = await Auth.currentAuthenticatedUser();
-      console.log('User is currently logged in.', this.cognitoUser);
-      this.letItBeKnownLoggedIn();
+      this.setPerformingBlockingAsyncCall();
+      const user = await Auth.currentAuthenticatedUser();
+      this.setUserAccount(user);
+      this.unSetPerformingBlockingAsyncCall();
     } catch (error) {
-      console.log('Error getting the current authenticated user', error);
-      this.letItBeKnownLoggedOut();
+      this.unSetPerformingBlockingAsyncCall();
+      throw error;
     }
   }
   async signInUser(username: string, password: string) {
     try {
       this.setPerformingBlockingAsyncCall();
       const user = await Auth.signIn(username, password);
-      this.cognitoUser = user;
-      this.letItBeKnownLoggedIn();
+      this.setUserAccount(user);
       this.unSetPerformingBlockingAsyncCall();
     } catch (error) {
       this.unSetPerformingBlockingAsyncCall();
@@ -96,8 +104,7 @@ export class UserAuthenticationService {
     try {
       this.setPerformingBlockingAsyncCall();
       await Auth.confirmSignUp(username, confirmationCode);
-      await this.checkIfSessionIsActive();
-      this.letItBeKnownLoggedIn();
+
       this.unSetPerformingBlockingAsyncCall();
     } catch (error) {
       this.unSetPerformingBlockingAsyncCall();
@@ -105,13 +112,16 @@ export class UserAuthenticationService {
     }
   }
   protected setPerformingBlockingAsyncCall() {
-    this.performingBlockingAsyncCall$.next(true);
+    this.uI.openLoadingComponent();
   }
   protected unSetPerformingBlockingAsyncCall() {
-    this.performingBlockingAsyncCall$.next(false);
+    this.uI.closeLoadingComponent();
+  }
+  protected setUserAccount(cognitoUser: CognitoUser | undefined) {
+    this.userAccount$s.next(cognitoUser);
   }
 }
-export class userAccount {
+export class UserAccount {
   constructor(private username: string) {}
   getUsername() {
     return this.username;

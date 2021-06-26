@@ -7,9 +7,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 /* Add Amplify imports */
 import { AmplifyUIAngularModule } from '@aws-amplify/ui-angular';
-import Amplify from 'aws-amplify';
-//@ts-ignore
-import awsconfig from '../aws-exports';
 import { AppComponent } from './app-component/app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthenticationComponent } from './Authentication/authentication/authentication.component';
@@ -24,8 +21,6 @@ import { CreateTodoListFormComponent } from './header/create-todo-list-form/crea
 import { HeaderComponent } from './header/header/header.component';
 import { ListItemComponent } from './main/list-item/list-item.component';
 import { MainComponent } from './main/main/main.component';
-/* Configure Amplify resources */
-Amplify.configure(awsconfig);
 
 @NgModule({
   declarations: [

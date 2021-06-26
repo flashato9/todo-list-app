@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { take } from 'rxjs/operators';
 import { AuthenticationComponent } from 'src/app/Authentication/authentication/authentication.component';
 import {
-  CreateTodoDialogData,
+  CreateOrUpdateTodoDialogData,
   CreateTodoListFormComponent,
 } from 'src/app/header/create-todo-list-form/create-todo-list-form.component';
 import { UserAuthInterfaceService } from 'src/app/services/user-authentication/user-auth-interface.service';
+import { logTheDialog } from 'src/app/services/user-interface.service';
 
 @Component({
   selector: 'app-header',
@@ -14,26 +15,25 @@ import { UserAuthInterfaceService } from 'src/app/services/user-authentication/u
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  constructor(public uAI: UserAuthInterfaceService, public dialog: MatDialog) {
-    this.uAI.exposedService.checkIfSessionIsActive();
-  }
+  constructor(public uAI: UserAuthInterfaceService, public dialog: MatDialog) {}
   //
   ngOnInit(): void {}
-  openCreationWindow() {
-    const d_data: CreateTodoDialogData = {
+  async openCreationWindow() {
+    const userAccount = await this.uAI.exposedService.userAccount$.pipe(take(1)).toPromise();
+
+    const d_data: CreateOrUpdateTodoDialogData = {
       thisIsACreateForm: true,
       thisIsAnUpdateForm: false,
-      todoItem: { id: -1, title: '', description: '' },
+      todoItem: { username: userAccount!.getUsername(), title: '', description: '' },
     };
     const dialogRef = this.dialog.open(CreateTodoListFormComponent, {
       width: '100%',
       height: '80vh',
       panelClass: 'dialog-box-create',
-
       disableClose: true,
       data: d_data,
     });
-    this.logTheDialog(dialogRef);
+    logTheDialog(dialogRef, 'CreateTodoListFormComponent');
   }
   async logOff() {
     try {
@@ -52,18 +52,6 @@ export class HeaderComponent implements OnInit {
       disableClose: true,
       autoFocus: false,
     });
-    this.logTheDialog(dialogRef);
-  }
-  logTheDialog<T, R>(dR: MatDialogRef<T, R>) {
-    dR.afterOpened()
-      .pipe(take(1))
-      .subscribe(() => {
-        console.log(`Dialog AuthenticationComponent has opened...`);
-      });
-    dR.afterClosed()
-      .pipe(take(1))
-      .subscribe(() => {
-        console.log(`Dialog AuthenticationComponent has closed...`);
-      });
+    logTheDialog(dialogRef, 'CreateTodoListFormComponent');
   }
 }

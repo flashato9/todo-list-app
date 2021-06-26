@@ -1,5 +1,0 @@
-type Todo @model {
-  id: ID!
-  title: String!
-  description: String
-}

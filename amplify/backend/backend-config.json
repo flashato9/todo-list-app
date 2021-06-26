@@ -1,6 +1,6 @@
 {
   "auth": {
-    "todolist268ebaeb": {
+    "thirdtodoappa06b4e5e": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
@@ -8,15 +8,16 @@
     }
   },
   "api": {
-    "todolistapp": {
+    "thirdtodoapp": {
       "service": "AppSync",
       "providerPlugin": "awscloudformation",
       "output": {
         "authConfig": {
           "defaultAuthentication": {
-            "authenticationType": "AMAZON_COGNITO_USER_POOLS",
-            "userPoolConfig": {
-              "userPoolId": "authtodolist268ebaeb"
+            "authenticationType": "API_KEY",
+            "apiKeyConfig": {
+              "apiKeyExpirationDays": 300,
+              "description": "todos"
             }
           },
           "additionalAuthenticationProviders": []

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { TestUserAuthenticationService } from 'src/app/testing/services/test-user-authentication.service';
 import { environment } from 'src/environments/environment';
+import { UserInterfaceService } from '../user-interface.service';
 import { UserAuthenticationService } from './user-authentication.service';
 
 @Injectable({
@@ -8,11 +9,11 @@ import { UserAuthenticationService } from './user-authentication.service';
 })
 export class UserAuthInterfaceService {
   exposedService: UserAuthenticationService;
-  constructor() {
+  constructor(private uI: UserInterfaceService) {
     if (environment.test) {
-      this.exposedService = new TestUserAuthenticationService();
+      this.exposedService = new TestUserAuthenticationService(this.uI);
     } else {
-      this.exposedService = new UserAuthenticationService();
+      this.exposedService = new UserAuthenticationService(this.uI);
     }
   }
 }

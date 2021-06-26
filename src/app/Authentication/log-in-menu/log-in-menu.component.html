@@ -54,6 +54,7 @@
 </form>
 <signup-confirmation-menu
   (onRequestStateChange)="this.changeState($event)"
+  (onSignupConfirmed)="this.changeState(this.authState.Login)"
   *ngIf="this.isCodeVerificationStage"
   [usernameForForm]="this.form.controls['username'].value"
 >

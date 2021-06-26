@@ -1,19 +1,19 @@
 {
-  "dev": {
+  "develop": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-todolist-dev-104051-authRole",
-      "UnauthRoleArn": "arn:aws:iam::065366914085:role/amplify-todolist-dev-104051-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::065366914085:role/amplify-todolist-dev-104051-authRole",
+      "AuthRoleName": "amplify-thirdtodoapp-develop-185802-authRole",
+      "UnauthRoleArn": "arn:aws:iam::065366914085:role/amplify-thirdtodoapp-develop-185802-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::065366914085:role/amplify-thirdtodoapp-develop-185802-authRole",
       "Region": "us-east-2",
-      "DeploymentBucketName": "amplify-todolist-dev-104051-deployment",
-      "UnauthRoleName": "amplify-todolist-dev-104051-unauthRole",
-      "StackName": "amplify-todolist-dev-104051",
-      "StackId": "arn:aws:cloudformation:us-east-2:065366914085:stack/amplify-todolist-dev-104051/5a001660-d10c-11eb-acad-0ae7bc5e833e",
-      "AmplifyAppId": "d3b59zrggl5rct"
+      "DeploymentBucketName": "amplify-thirdtodoapp-develop-185802-deployment",
+      "UnauthRoleName": "amplify-thirdtodoapp-develop-185802-unauthRole",
+      "StackName": "amplify-thirdtodoapp-develop-185802",
+      "StackId": "arn:aws:cloudformation:us-east-2:065366914085:stack/amplify-thirdtodoapp-develop-185802/ccf6a250-d608-11eb-9fac-02e9025888d0",
+      "AmplifyAppId": "d2uyd7x5kfybok"
     },
     "categories": {
       "auth": {
-        "todolist268ebaeb": {}
+        "thirdtodoappa06b4e5e": {}
       }
     }
   }

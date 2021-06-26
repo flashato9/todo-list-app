@@ -17,7 +17,7 @@
     "**/README.md": true,
     "**/src/assets": true,
     "**/src/aws-exports.js": true,
-    "**/src/environments": false,
+    "**/src/environments": true,
     "**/src/main.ts": true,
     "**/src/models": true,
     "**/src/polyfills.ts": true,
